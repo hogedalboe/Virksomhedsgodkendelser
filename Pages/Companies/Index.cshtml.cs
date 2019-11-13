@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Virksomhedsgodkendelser.Data;
 using Virksomhedsgodkendelser.Models;
 
-namespace Virksomhedsgodkendelser.Pages.Companies
+namespace Virksomhedsgodkendelser.Pages.Companies 
 {
     public class IndexModel : PageModel
     {
