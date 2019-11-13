@@ -1,0 +1,120 @@
+﻿@page
+@model Virksomhedsgodkendelser.Pages.Companies.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Pnr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Virksomhedsnavn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].CVRnr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Adresse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].PostnrPostdistrikt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Tlfnr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].UddannelseskodeUddannelsesbetegnelse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].COSAnr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].SpecialekodeSpecialebetegnelse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].GodkendelseOprettet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Nygodkendelse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Godkendelsesdato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Godkendelsesaendring)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].Godkendelsesantal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company[0].AntalIgangvarendeAftaler)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Company) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pnr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Virksomhedsnavn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CVRnr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostnrPostdistrikt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tlfnr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UddannelseskodeUddannelsesbetegnelse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.COSAnr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialekodeSpecialebetegnelse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GodkendelseOprettet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nygodkendelse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Godkendelsesdato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Godkendelsesaendring)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Godkendelsesantal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AntalIgangvarendeAftaler)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

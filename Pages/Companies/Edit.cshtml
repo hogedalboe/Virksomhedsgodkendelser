@@ -1,0 +1,105 @@
+﻿@page
+@model Virksomhedsgodkendelser.Pages.Companies.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Company</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Company.ID" />
+            <div class="form-group">
+                <label asp-for="Company.Pnr" class="control-label"></label>
+                <input asp-for="Company.Pnr" class="form-control" />
+                <span asp-validation-for="Company.Pnr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.Virksomhedsnavn" class="control-label"></label>
+                <input asp-for="Company.Virksomhedsnavn" class="form-control" />
+                <span asp-validation-for="Company.Virksomhedsnavn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.CVRnr" class="control-label"></label>
+                <input asp-for="Company.CVRnr" class="form-control" />
+                <span asp-validation-for="Company.CVRnr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.Adresse" class="control-label"></label>
+                <input asp-for="Company.Adresse" class="form-control" />
+                <span asp-validation-for="Company.Adresse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.PostnrPostdistrikt" class="control-label"></label>
+                <input asp-for="Company.PostnrPostdistrikt" class="form-control" />
+                <span asp-validation-for="Company.PostnrPostdistrikt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.Tlfnr" class="control-label"></label>
+                <input asp-for="Company.Tlfnr" class="form-control" />
+                <span asp-validation-for="Company.Tlfnr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.UddannelseskodeUddannelsesbetegnelse" class="control-label"></label>
+                <input asp-for="Company.UddannelseskodeUddannelsesbetegnelse" class="form-control" />
+                <span asp-validation-for="Company.UddannelseskodeUddannelsesbetegnelse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.COSAnr" class="control-label"></label>
+                <input asp-for="Company.COSAnr" class="form-control" />
+                <span asp-validation-for="Company.COSAnr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.SpecialekodeSpecialebetegnelse" class="control-label"></label>
+                <input asp-for="Company.SpecialekodeSpecialebetegnelse" class="form-control" />
+                <span asp-validation-for="Company.SpecialekodeSpecialebetegnelse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.GodkendelseOprettet" class="control-label"></label>
+                <input asp-for="Company.GodkendelseOprettet" class="form-control" />
+                <span asp-validation-for="Company.GodkendelseOprettet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.Nygodkendelse" class="control-label"></label>
+                <input asp-for="Company.Nygodkendelse" class="form-control" />
+                <span asp-validation-for="Company.Nygodkendelse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.Godkendelsesdato" class="control-label"></label>
+                <input asp-for="Company.Godkendelsesdato" class="form-control" />
+                <span asp-validation-for="Company.Godkendelsesdato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.Godkendelsesaendring" class="control-label"></label>
+                <input asp-for="Company.Godkendelsesaendring" class="form-control" />
+                <span asp-validation-for="Company.Godkendelsesaendring" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.Godkendelsesantal" class="control-label"></label>
+                <input asp-for="Company.Godkendelsesantal" class="form-control" />
+                <span asp-validation-for="Company.Godkendelsesantal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company.AntalIgangvarendeAftaler" class="control-label"></label>
+                <input asp-for="Company.AntalIgangvarendeAftaler" class="form-control" />
+                <span asp-validation-for="Company.AntalIgangvarendeAftaler" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

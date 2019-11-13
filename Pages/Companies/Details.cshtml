@@ -1,0 +1,109 @@
+﻿@page
+@model Virksomhedsgodkendelser.Pages.Companies.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Pnr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Pnr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Virksomhedsnavn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Virksomhedsnavn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.CVRnr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.CVRnr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Adresse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Adresse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.PostnrPostdistrikt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.PostnrPostdistrikt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Tlfnr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Tlfnr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.UddannelseskodeUddannelsesbetegnelse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.UddannelseskodeUddannelsesbetegnelse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.COSAnr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.COSAnr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.SpecialekodeSpecialebetegnelse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.SpecialekodeSpecialebetegnelse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.GodkendelseOprettet)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.GodkendelseOprettet)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Nygodkendelse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Nygodkendelse)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Godkendelsesdato)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Godkendelsesdato)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Godkendelsesaendring)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Godkendelsesaendring)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.Godkendelsesantal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.Godkendelsesantal)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company.AntalIgangvarendeAftaler)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.AntalIgangvarendeAftaler)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Company.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
