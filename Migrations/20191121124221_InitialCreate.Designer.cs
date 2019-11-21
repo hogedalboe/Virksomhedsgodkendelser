@@ -10,7 +10,7 @@ using Virksomhedsgodkendelser.Data;
 namespace Virksomhedsgodkendelser.Migrations
 {
     [DbContext(typeof(VirksomhedsgodkendelserContext))]
-    [Migration("20191113133750_InitialCreate")]
+    [Migration("20191121124221_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,6 @@ namespace Virksomhedsgodkendelser.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Adresse")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("AntalIgangvarendeAftaler")
                         .HasColumnType("int");

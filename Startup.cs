@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Virksomhedsgodkendelser.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Virksomhedsgodkendelser
 {
@@ -29,6 +30,8 @@ namespace Virksomhedsgodkendelser
 
             services.AddDbContext<VirksomhedsgodkendelserContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("VirksomhedsgodkendelserContext")));
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +58,13 @@ namespace Virksomhedsgodkendelser
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+            });
+
+            // https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.0
+            // https://stackoverflow.com/questions/57684093/using-usemvc-to-configure-mvc-is-not-supported-while-using-endpoint-routing
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

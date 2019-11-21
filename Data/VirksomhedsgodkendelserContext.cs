@@ -12,6 +12,7 @@ namespace Virksomhedsgodkendelser.Data
         public VirksomhedsgodkendelserContext (DbContextOptions<VirksomhedsgodkendelserContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<Virksomhedsgodkendelser.Models.Company> Company { get; set; }

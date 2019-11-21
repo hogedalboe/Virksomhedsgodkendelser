@@ -26,9 +26,6 @@ namespace Virksomhedsgodkendelser.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Adresse")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("AntalIgangvarendeAftaler")
                         .HasColumnType("int");
 

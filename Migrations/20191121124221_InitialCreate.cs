@@ -16,7 +16,6 @@ namespace Virksomhedsgodkendelser.Migrations
                     Pnr = table.Column<int>(nullable: false),
                     Virksomhedsnavn = table.Column<string>(nullable: true),
                     CVRnr = table.Column<string>(nullable: true),
-                    Adresse = table.Column<string>(nullable: true),
                     PostnrPostdistrikt = table.Column<string>(nullable: true),
                     Tlfnr = table.Column<string>(nullable: true),
                     UddannelseskodeUddannelsesbetegnelse = table.Column<string>(nullable: true),

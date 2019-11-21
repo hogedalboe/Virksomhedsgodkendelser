@@ -1,0 +1,18 @@
+﻿@page
+@model Virksomhedsgodkendelser.Pages.APITestPageModel
+
+@*ViewData is a container for data to be passed from the PageModel to the content page.*@
+@{
+    ViewData["Title"] = "Test Page";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@*Show company names on the page.*@
+@foreach (var item in Model.Company)
+{
+    <p>
+        @Html.DisplayFor(modelItem => item.Virksomhedsnavn)
+    </p>
+}
+
