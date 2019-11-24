@@ -5,18 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Virksomhedsgodkendelser.Data;
 using Virksomhedsgodkendelser.Models;
-
-// http://www.binaryintellect.net/articles/e6557104-d06a-418c-a1a9-b8ce248f60b1.aspx
 
 namespace Virksomhedsgodkendelser.Pages
 {
-    public class APITestPageModel : PageModel
+    public class VejledningModel : PageModel
     {
-        private readonly Virksomhedsgodkendelser.Data.VirksomhedsgodkendelserContext _context;
+        private readonly Data.VirksomhedsgodkendelserContext _context;
 
-        public APITestPageModel(Virksomhedsgodkendelser.Data.VirksomhedsgodkendelserContext context)
+        public VejledningModel(Data.VirksomhedsgodkendelserContext context)
         {
             _context = context;
         }
