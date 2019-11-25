@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Virksomhedsgodkendelser</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <!-- <link rel="stylesheet" href="~/css/site.css" /> -->
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/site.css")" media="screen" />
 </head>
 <body>
-    <!--
+    @*
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -31,19 +30,21 @@
             </div>
         </nav>
     </header>
-    -->
+    *@
 
-    <div class="">
-        <main role="main" class="container-fluid">
+    <main role="main" style="margin-top:12px;">
+        <div class="container-fluid" style="min-height:700px;">
             @RenderBody()
-        </main>
-    </div>
+        </div>
+    </main>
 
+    @*
     <footer class="border-top footer text-muted">
         <div class="container-fluid">
             &copy; 2019 - <a href="https://iu.dk/">Industriens Uddannelser</a>
         </div>
     </footer>
+    *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -16,14 +16,21 @@ namespace Virksomhedsgodkendelser.Pages
 
         public IList<Company> Company { get; set; }
 
+        // Filter parameters
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public string SearchParam { get; set; }
+
+        // Filter data 
+        //public string[] Regions ...
+        //public string[] Municipalities ...
+        //public string[] Educations ...
+        //public string[] Specialisations ...
+
         public IndexModel(Data.VirksomhedsgodkendelserContext context)
         {
             _context = context;
         }
-
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-        public string SearchParam { get; set; }
 
         public async Task OnGetAsync(int pageindex = 1, int pagesize = 50, string search = null)
         {
