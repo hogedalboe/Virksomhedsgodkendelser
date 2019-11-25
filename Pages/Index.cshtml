@@ -10,8 +10,8 @@
     @*Filters*@
     <div class="col-lg-8">
         <div class="container">
+            @*Region*@
             <div class="btn-group btn-group-sm" role="group" aria-label="Table filters">
-                @*Region*@
                 <button id="dropdown-region" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Region
                 </button>
@@ -19,17 +19,19 @@
                     <a class="dropdown-item" href="#">Region Hovedstaden</a>
                     <a class="dropdown-item" href="#">Region Midtjylland</a>
                 </div>
-                @*Municipality*@
+            </div>
+            @*Municipality*@
+            <div class="btn-group btn-group-sm" role="group" aria-label="Table filters">
                 <button id="dropdown-municipality" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Region
+                    Kommune
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-municipality">
                     <a class="dropdown-item" href="#">Morsø</a>
                     <a class="dropdown-item" href="#">Frederiksberg</a>
                 </div>
-                @*Clear all filters*@
-                <button type="button" class="btn btn-secondary">Ryd filtre</button>
             </div>
+            @*Clear all filters*@
+            <button type="button" class="btn btn-secondary btn-sm">Ryd filtre</button>
         </div>
     </div>
     @*Search*@
@@ -46,80 +48,147 @@
 </div>
 
 <div class="row">
-    @*Table*@
     <div class="col-lg-8">
+        @*Table*@
         <div class="nhb-widget nhb-margin-bottom container border border-light">
-            @*Show company names on the page.*@
-            @foreach (var item in Model.Company)
-            {
-                <p>
-                    @Html.DisplayFor(modelItem => item.Virksomhedsnavn)
-                </p>
-            }
+            @*Fill companies to table*@
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Company[0].ID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Company[0].Pnr)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Company[0].Virksomhedsnavn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Company[0].CVRnr)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Company)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pnr)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Virksomhedsnavn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CVRnr)
+                            </td>
+                            @*
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                            </td>
+                            *@
+                        </tr>
+                     }
+                </tbody>
+            </table>
+        </div>
+
+        @*Pageination*@
+        <div class="nhb-widget container">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @*Previous page*@
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Forrige</span>
+                        </a>
+                    </li>
+
+                    @*Pages*@
+                    @*Nået hertil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*@
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                    @*Next page*@
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Næste</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 
-    <div class="col-lg-4">
-        @*Company details*@
-        <div class="nhb-widget container nhb-margin-bottom">
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#company-details" aria-expanded="false" aria-controls="company-details" style="width:100%;">
-                Virksomhedsoplysninger
-            </button>
-            <div class="collapse" id="company-details">
-                <div class="card card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                </div>
-            </div>
-        </div>
-        @*Approvement details*@
-        <div class="nhb-widget container nhb-margin-bottom">
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approvement-details" aria-expanded="false" aria-controls="approvement-details" style="width:100%;">
-                Godkendelsesoplysninger
-            </button>
-            <div class="collapse" id="approvement-details">
-                <div class="card card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                </div>
-            </div>
-        </div>
-        @*Advanced filters*@
-        <div class="nhb-widget container nhb-margin-bottom">
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters" style="width:100%;">
-                Advancerede filtre
-            </button>
-            <div class="collapse" id="advanced-filters">
-                <div class="card card-body">
-                    @*Guide*@
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-
-                    @*Number of active contracts*@
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="filter-active-contracts">Igangværende aftaler</label>
-                        </div>
-                        <select class="custom-select" id="filter-active-contracts">
-                            <option selected>Vælg...</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
+        <div class="col-lg-4">
+            @*Company details*@
+            <div class="nhb-widget container nhb-margin-bottom">
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#company-details" aria-expanded="false" aria-controls="company-details" style="width:100%;">
+                    Virksomhedsoplysninger
+                </button>
+                <div class="collapse" id="company-details">
+                    <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
                     </div>
+                </div>
+            </div>
+            @*Approvement details*@
+            <div class="nhb-widget container nhb-margin-bottom">
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approvement-details" aria-expanded="false" aria-controls="approvement-details" style="width:100%;">
+                    Godkendelsesoplysninger
+                </button>
+                <div class="collapse" id="approvement-details">
+                    <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                </div>
+            </div>
+            @*Advanced filters*@
+            <div class="nhb-widget container nhb-margin-bottom">
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters" style="width:100%;">
+                    Advancerede filtre
+                </button>
+                <div class="collapse" id="advanced-filters">
+                    <div class="card card-body">
+                        @*Guide*@
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
 
-                    <button class="btn btn-outline-info btn-sm" type="button" style="max-width:100px;">Anvend</button>
+                        @*Number of active contracts*@
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="filter-active-contracts">Igangværende aftaler</label>
+                            </div>
+                            <select class="custom-select" id="filter-active-contracts">
+                                <option selected>Vælg...</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-outline-info btn-sm" type="button" style="max-width:100px;">Anvend</button>
+                    </div>
+                </div>
+            </div>
+            @*Exports*@
+            <div class="nhb-widget container nhb-margin-bottom">
+                <div class="btn-group" role="group" aria-label="Export options">
+                    <span class="input-group-text input-group-sm">Eksportér resultater</span>
+                    <button type="button" class="btn btn-secondary btn-sm">Excel</button>
+                    <button type="button" class="btn btn-secondary btn-sm">Pdf</button>
                 </div>
             </div>
         </div>
-        @*Exports*@
-        <div class="nhb-widget container nhb-margin-bottom">
-            <div class="btn-group" role="group" aria-label="Export options">
-                <span class="input-group input-group-text input-group-sm">Eksportér resultater</span>
-                <button type="button" class="btn btn-secondary btn-sm">Excel</button>
-                <button type="button" class="btn btn-secondary btn-sm">PDF</button>
-            </div>
-        </div>
     </div>
-</div>
-
 
 <p>Page:</p>
 <p>@Model.PageIndex.ToString()</p>
