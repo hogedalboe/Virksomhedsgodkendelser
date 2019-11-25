@@ -52,8 +52,8 @@
         @*Table*@
         <div class="nhb-widget container">
             @*Fill companies to table*@
-            <table class="table table-dark">
-                <thead>
+            <table class="table table-striped">
+                <thead class="thead-light">
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.Company[0].ID)
@@ -86,15 +86,15 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.CVRnr)
                             </td>
-                            @*
+
                             <td>
                                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
                             </td>
-                            *@
+
                         </tr>
-                     }
+                    }
                 </tbody>
             </table>
         </div>
@@ -110,13 +110,18 @@
                             <span class="sr-only">Forrige</span>
                         </a>
                     </li>
-
                     @*Pages*@
-                    @*Nået hertil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*@
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    @for (int i = 1; i <= Model.PageCount; i++)
+                    {
+                        // Check the current page through constructor parameters
+                        string active = "";
+                        if (i == Model.PageIndex)
+                        {
+                            active = "active";
+                        }
 
+                        <li class="page-item @active"><a class="page-link" onclick="navigateWithParameters(this);">@i</a></li>
+                    }
                     @*Next page*@
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
@@ -129,69 +134,79 @@
         </div>
     </div>
 
-        <div class="col-lg-4">
-            @*Company details*@
-            <div class="nhb-widget container nhb-margin-bottom">
-                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#company-details" aria-expanded="false" aria-controls="company-details" style="width:100%;">
-                    Virksomhedsoplysninger
-                </button>
-                <div class="collapse" id="company-details">
-                    <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
-                </div>
-            </div>
-            @*Approvement details*@
-            <div class="nhb-widget container nhb-margin-bottom">
-                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approvement-details" aria-expanded="false" aria-controls="approvement-details" style="width:100%;">
-                    Godkendelsesoplysninger
-                </button>
-                <div class="collapse" id="approvement-details">
-                    <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
-                </div>
-            </div>
-            @*Advanced filters*@
-            <div class="nhb-widget container nhb-margin-bottom">
-                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters" style="width:100%;">
-                    Avancerede filtre
-                </button>
-                <div class="collapse" id="advanced-filters">
-                    <div class="card card-body">
-                        @*Guide*@
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-
-                        @*Number of active contracts*@
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="filter-active-contracts">Igangværende aftaler</label>
-                            </div>
-                            <select class="custom-select" id="filter-active-contracts">
-                                <option selected>Vælg...</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </div>
-
-                        <button class="btn btn-outline-info btn-sm" type="button" style="max-width:100px;">Anvend</button>
-                    </div>
-                </div>
-            </div>
-            @*Exports*@
-            <div class="nhb-widget container nhb-margin-bottom">
-                <div class="btn-group" role="group" aria-label="Export options">
-                    <span class="input-group-text input-group-sm">Eksportér resultater</span>
-                    <button type="button" class="btn btn-secondary btn-sm">Excel</button>
-                    <button type="button" class="btn btn-secondary btn-sm">PDF</button>
+    <div class="col-lg-4">
+        @*Company details*@
+        <div class="nhb-widget container nhb-margin-bottom">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#company-details" aria-expanded="false" aria-controls="company-details" style="width:100%;">
+                Virksomhedsoplysninger
+            </button>
+            <div class="collapse" id="company-details">
+                <div class="card card-body">
+                    Vælg en godkendelse i tabellen for at se virksomhedsoplysninger.
                 </div>
             </div>
         </div>
+        @*Approvement details*@
+        <div class="nhb-widget container nhb-margin-bottom">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approvement-details" aria-expanded="false" aria-controls="approvement-details" style="width:100%;">
+                Godkendelsesoplysninger
+            </button>
+            <div class="collapse" id="approvement-details">
+                <div class="card card-body">
+                    Vælg en godkendelse i tabellen for at se godkendelsesoplysninger.
+                </div>
+            </div>
+        </div>
+        @*Advanced filters*@
+        <div class="nhb-widget container nhb-margin-bottom">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters" style="width:100%;">
+                Avancerede filtre
+            </button>
+            <div class="collapse" id="advanced-filters">
+                <div class="card card-body">
+                    @*Guide*@
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+
+                    @*Number of active contracts*@
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="filter-active-contracts">Igangværende aftaler</label>
+                        </div>
+                        <select class="custom-select" id="filter-active-contracts">
+                            <option selected>Vælg...</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-outline-info btn-sm" type="button" style="max-width:100px;">Anvend</button>
+                </div>
+            </div>
+        </div>
+        @*Exports*@
+        <div class="nhb-widget container nhb-margin-bottom">
+            <div class="btn-group" role="group" aria-label="Export options">
+                <span class="input-group-text input-group-sm">Eksportér resultater</span>
+                <button type="button" class="btn btn-secondary btn-sm">Excel</button>
+                <button type="button" class="btn btn-secondary btn-sm">PDF</button>
+            </div>
+        </div>
     </div>
+</div>
 
-<p>Page:</p>
-<p>@Model.PageIndex.ToString()</p>
+<script>
+    @*Construct url with query parameters*@
+    function navigateWithParameters(element)
+    {
+        var queryParameters = "?";
 
-<p>Size:</p>
-<p>@Model.PageSize.ToString()</p>
+        // Page
+        queryParameters += "pageindex=" + element.innerHTML;
+
+        // Size
+
+        // Navigate
+        window.location.href = queryParameters;
+    }
+</script>
