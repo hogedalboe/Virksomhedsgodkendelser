@@ -32,7 +32,7 @@ namespace Virksomhedsgodkendelser.Pages
             _context = context;
         }
 
-        public async Task OnGetAsync(int pageindex = 1, int pagesize = 50, string search = null)
+        public async Task OnGetAsync(int pageindex = 1, int pagesize = 50, string search = "")
         {
             // Set filters: ~?pageindex=3&pagesize=10&search=novo-nordisk&
             PageIndex = pageindex;
