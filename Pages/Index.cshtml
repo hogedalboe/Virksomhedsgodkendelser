@@ -1,27 +1,82 @@
 ﻿@page
+
 @model IndexModel
+
 @{
     ViewData["Title"] = "Home";
 }
 
-<h1>Virksomhedsgodkendelser</h1>
+<h3>Virksomhedsgodkendelser</h3>
 
 <div class="row">
-    <div class="col-sm-2" id="filters">
+    @*Filters*@
+    <div class="col-lg-8">
         <div class="nhb-widget container">
             <p>Filter</p>
         </div>
     </div>
-</div>
-
-<div class="col-sm-7" id="company-table">
-    <div class="nhb-widget container">
-        <p>Table</p>
-    </div>
-
-    <div class="col-sm-3" id="dk-map">
+    @*Search*@
+    <div class="col-lg-4">
         <div class="nhb-widget container">
-            <p>Municipal map</p>
+            <div class="input-group mb-3">
+                <input type="search" class="form-control" placeholder="Virksomhedsnavn, adresse el.lign." aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-info" type="button">Søg</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="row">
+    @*Table*@
+    <div class="col-lg-8">
+        <div class="nhb-widget container">
+            <p>Table</p>
+            @*Show company names on the page.*@
+            @foreach (var item in Model.Company)
+            {
+                <p>
+                    @Html.DisplayFor(modelItem => item.Virksomhedsnavn)
+                </p>
+            }
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        @*Company details*@
+        <div class="nhb-widget container">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#company-details" aria-expanded="false" aria-controls="company-details" style="width:100%;">
+                Virksomhedsoplysninger
+            </button>
+            <div class="collapse" id="company-details">
+                <div class="card card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+            </div>
+        </div>
+        @*Approvement details*@
+        <div class="nhb-widget container">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approvement-details" aria-expanded="false" aria-controls="approvement-details" style="width:100%;">
+                Godkendelsesoplysninger
+            </button>
+            <div class="collapse" id="approvement-details">
+                <div class="card card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+            </div>
+        </div>
+        @*Map*@
+        <div class="nhb-widget container">
+            <p>Map</p>
+        </div>
+    </div>
+</div>
+
+
+
+<p>Page:</p>
+<p>@Model.PageIndex.ToString()</p>
+
+<p>Size:</p>
+<p>@Model.PageSize.ToString()</p>

@@ -1,7 +1,8 @@
 ﻿
 /* Basic layout
 ------------------------------------------*/
-.nhb-widget {
+.nhb-widget 
+{
     overflow: hidden;
-    background-color: green;
+    /*background-color: green;*/
 }
