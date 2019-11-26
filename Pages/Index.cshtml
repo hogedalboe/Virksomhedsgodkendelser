@@ -70,9 +70,9 @@
     <div class="col-lg-4">
         <div class="nhb-widget container">
             <div class="input-group input-group-sm mb-3">
-                <input type="search" class="form-control" placeholder="Virksomhedsnavn, adresse el.lign." aria-label="Search" value="@Model.SearchParam">
+                <input type="search" class="form-control" placeholder="Virksomhedsnavn, adresse el.lign." aria-label="Search" value="@Model.SearchParam" onsubmit="navigateWithParameters(this, default,  );">
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">Søg</button>
+                    <button class="btn btn-secondary" type="button"onclick="navigateWithParameters(this);">Søg</button>
                 </div>
             </div>
         </div>
@@ -176,7 +176,7 @@
                 <div class="card card-body">
                     <div class="container nhb-margin-bottom">
                         <b>Virksomhed</b><br />
-                        Birger A/S<br />
+                        Fabrik A/S<br />
                         Holmbladsvej 2<br />
                         8600 Silkeborg<br />
                     </div>
@@ -250,7 +250,8 @@
         @*Exports*@
         <div class="nhb-widget container nhb-margin-bottom">
             <div class="btn-group" role="group" aria-label="Export options">
-                <span class="input-group-text input-group-sm">Eksportér @Model.CompanyCount resultater</span>
+                @*<span class="input-group-text input-group-sm">Eksportér @Model.CompanyCount resultater</span>*@
+                <button type="button" class="btn btn-outline-secondary btn-sm" disabled>Eksportér @Model.CompanyCount resultater</button>
                 <button type="button" class="btn btn-secondary btn-sm">Excel</button>
                 <button type="button" class="btn btn-secondary btn-sm">PDF</button>
             </div>
@@ -260,7 +261,7 @@
 
 <script>
     @*Construct url with query parameters and navigate to it*@
-    function navigateWithParameters(element, pageindex = @Model.PageIndex, pagesize = @Model.PageSize)
+    function navigateWithParameters(element, pageindex = @Model.PageIndex, pagesize = @Model.PageSize, search = "")
     {
         var queryParameters = "?";
 
@@ -275,6 +276,9 @@
         }
         
         @*Size*@
+
+
+        @*Search*@
 
 
         @*Navigate*@
