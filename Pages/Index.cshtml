@@ -56,8 +56,10 @@
                     Vis
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
-                    <a class="dropdown-item" href="#">1</a>
-                    <a class="dropdown-item" href="#">2</a>
+                    @for (int i = 0; i < Model.PageSizes.Length; i++)
+                    {
+                        <a class="dropdown-item" href="#">@Model.PageSizes[i]</a>
+                    }
                 </div>
             </div>
             @*Clear all filters*@
@@ -172,7 +174,38 @@
             </button>
             <div class="collapse" id="company-details">
                 <div class="card card-body">
-                    Vælg en godkendelse i tabellen for at se virksomhedsoplysninger.
+                    <div class="container nhb-margin-bottom">
+                        <b>Virksomhed</b><br />
+                        Birger A/S<br />
+                        Holmbladsvej 2<br />
+                        8600 Silkeborg<br />
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>CVR-nr</b><br />
+                        123456789
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Branche</b><br />
+                        Fremstilling af andre værktøjsmaskiner
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Selskabsform</b><br />
+                        Aktieselskab
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>P-enheder med godkendelser</b><br />
+                        Holmbladsvej 2, 8600 Silkeborg<br />
+                        Hvidelvej 16, 7400 Herning<br />
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Godkendelser på alle p-enheder</b><br />
+                        Klejnsmed <span class="badge badge-info">8</span><br />
+                        Beslagsmed <span class="badge badge-info">1</span><br />
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Website</b><br />
+                        <a href=" ">www.tresomt.dk</a><br />
+                    </div>
                 </div>
             </div>
         </div>
