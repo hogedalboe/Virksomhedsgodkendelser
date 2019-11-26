@@ -30,15 +30,45 @@
                     <a class="dropdown-item" href="#">Frederiksberg</a>
                 </div>
             </div>
+            @*Education*@
+            <div class="btn-group btn-group-sm" role="group" aria-label="Table filters">
+                <button id="dropdow-education" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Uddannelse
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdown-education">
+                    <a class="dropdown-item" href="#">Smed</a>
+                    <a class="dropdown-item" href="#">Datatekniker</a>
+                </div>
+            </div>
+            @*Specialisation*@
+            <div class="btn-group btn-group-sm" role="group" aria-label="Table filters">
+                <button id="dropdow-specialisation" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Speciale
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
+                    <a class="dropdown-item" href="#">Klejnsmed</a>
+                    <a class="dropdown-item" href="#">Infrastruktur</a>
+                </div>
+            </div>
+            @*Show results per page*@
+            <div class="btn-group btn-group-sm" role="group" aria-label="Table filters">
+                <button id="dropdow-specialisation" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Antal resultater per side">
+                    Vis
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
+                    <a class="dropdown-item" href="#">1</a>
+                    <a class="dropdown-item" href="#">2</a>
+                </div>
+            </div>
             @*Clear all filters*@
-            <button type="button" class="btn btn-secondary btn-sm">Ryd filtre</button>
+            <button type="button" class="btn btn-info btn-sm">Ryd filtre</button>
         </div>
     </div>
     @*Search*@
     <div class="col-lg-4">
         <div class="nhb-widget container">
             <div class="input-group input-group-sm mb-3">
-                <input type="search" class="form-control" placeholder="Virksomhedsnavn, adresse el.lign." aria-label="Search" value="@Model.SearchParam.ToString()">
+                <input type="search" class="form-control" placeholder="Virksomhedsnavn, adresse el.lign." aria-label="Search" value="@Model.SearchParam">
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="button">Søg</button>
                 </div>
@@ -99,13 +129,13 @@
             </table>
         </div>
 
-        @*Pageination*@
+        @*Pagination*@
         <div class="nhb-widget container">
             <nav aria-label="Page navigation">
                 <ul class="pagination pagination-sm">
                     @*Previous page*@
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
+                        <a class="page-link" onclick="navigateWithParameters(this, @((Model.PageIndex - 1)));" href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Forrige</span>
                         </a>
@@ -120,11 +150,11 @@
                             active = "active";
                         }
 
-                        <li class="page-item @active"><a class="page-link" onclick="navigateWithParameters(this);">@i</a></li>
+                        <li class="page-item @active"><a class="page-link" onclick="navigateWithParameters(this, @i);" href="#">@i</a></li>
                     }
                     @*Next page*@
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
+                        <a class="page-link" onclick="navigateWithParameters(this, @((Model.PageIndex + 1)));" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Næste</span>
                         </a>
@@ -187,7 +217,7 @@
         @*Exports*@
         <div class="nhb-widget container nhb-margin-bottom">
             <div class="btn-group" role="group" aria-label="Export options">
-                <span class="input-group-text input-group-sm">Eksportér resultater</span>
+                <span class="input-group-text input-group-sm">Eksportér @Model.CompanyCount resultater</span>
                 <button type="button" class="btn btn-secondary btn-sm">Excel</button>
                 <button type="button" class="btn btn-secondary btn-sm">PDF</button>
             </div>
@@ -196,17 +226,25 @@
 </div>
 
 <script>
-    @*Construct url with query parameters*@
-    function navigateWithParameters(element)
+    @*Construct url with query parameters and navigate to it*@
+    function navigateWithParameters(element, pageindex = @Model.PageIndex, pagesize = @Model.PageSize)
     {
         var queryParameters = "?";
 
-        // Page
-        queryParameters += "pageindex=" + element.innerHTML;
+        @*Page navigation*@
+        if (pageindex > 1 && pageindex <= @Model.PageCount)
+        {
+            queryParameters += "pageindex=" + pageindex;
+        }
+        else if (pageindex > @Model.PageCount)
+        {
+            queryParameters += "pageindex=" + @Model.PageIndex;
+        }
+        
+        @*Size*@
 
-        // Size
 
-        // Navigate
+        @*Navigate*@
         window.location.href = queryParameters;
     }
 </script>
