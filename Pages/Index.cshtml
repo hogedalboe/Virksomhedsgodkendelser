@@ -16,8 +16,18 @@
                     Region
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-region">
-                    <a class="dropdown-item" href="#">Region Hovedstaden</a>
-                    <a class="dropdown-item" href="#">Region Midtjylland</a>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input" type="checkbox" value="" id="dropdown-region-item1">
+                        <label class="form-check-label" for="dropdown-region-item1">
+                            Region Hovedstaden
+                        </label>
+                    </div>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input" type="checkbox" value="" id="dropdown-region-item2">
+                        <label class="form-check-label" for="dropdown-region-item2">
+                            Region Midtjylland
+                        </label>
+                    </div>
                 </div>
             </div>
             @*Municipality*@
@@ -70,9 +80,9 @@
     <div class="col-lg-4">
         <div class="nhb-widget container">
             <div class="input-group input-group-sm mb-3">
-                <input type="search" class="form-control" placeholder="Virksomhedsnavn, adresse el.lign." aria-label="Search" value="@Model.SearchParam" onsubmit="navigateWithParameters(this, default,  );">
+                <input type="search" id="nhb-search" class="form-control" placeholder="Virksomhedsnavn, adresse el.lign." aria-label="Search" onkeydown="search();" value="@Model.SearchParam">
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button"onclick="navigateWithParameters(this);">Søg</button>
+                    <button class="btn btn-secondary" type="button" onclick="navigateWithParameters({});">Søg</button>
                 </div>
             </div>
         </div>
@@ -137,7 +147,7 @@
                 <ul class="pagination pagination-sm">
                     @*Previous page*@
                     <li class="page-item">
-                        <a class="page-link" onclick="navigateWithParameters(this, @((Model.PageIndex - 1)));" href="#" aria-label="Previous">
+                        <a class="page-link" onclick="navigateWithParameters({pageindex: @((Model.PageIndex - 1))});" href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Forrige</span>
                         </a>
@@ -152,11 +162,11 @@
                             active = "active";
                         }
 
-                        <li class="page-item @active"><a class="page-link" onclick="navigateWithParameters(this, @i);" href="#">@i</a></li>
+                        <li class="page-item @active"><a class="page-link" onclick="navigateWithParameters({pageindex: @i});" href="#">@i</a></li>
                     }
                     @*Next page*@
                     <li class="page-item">
-                        <a class="page-link" onclick="navigateWithParameters(this, @((Model.PageIndex + 1)));" href="#" aria-label="Next">
+                        <a class="page-link" onclick="navigateWithParameters({pageindex: @((Model.PageIndex + 1))});" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Næste</span>
                         </a>
@@ -261,27 +271,47 @@
 
 <script>
     @*Construct url with query parameters and navigate to it*@
-    function navigateWithParameters(element, pageindex = @Model.PageIndex, pagesize = @Model.PageSize, search = "")
+    function navigateWithParameters({
+        pageindex = @Model.PageIndex,
+        pagesize = @Model.PageSize})
     {
         var queryParameters = "?";
 
         @*Page navigation*@
         if (pageindex > 1 && pageindex <= @Model.PageCount)
         {
-            queryParameters += "pageindex=" + pageindex;
+            queryParameters += "pageindex=" + pageindex + "&";
         }
         else if (pageindex > @Model.PageCount)
         {
-            queryParameters += "pageindex=" + @Model.PageIndex;
+            queryParameters += "pageindex=" + @Model.PageIndex + "&";
         }
         
         @*Size*@
 
 
         @*Search*@
+        var search = document.getElementById("nhb-search").value;
+        if (search)
+        {
+            queryParameters += "search=" + search + "&";
+        }
+        else if ("@Model.SearchParam" !== "")
+        {
+            queryParameters += "search=@Model.SearchParam&";
+        }
 
 
         @*Navigate*@
         window.location.href = queryParameters;
+    }
+
+    @*Handle searching by keydown in the search form*@
+    function search()
+    {
+        if (event.key === 'Enter')
+        {
+            navigateWithParameters({});
+        }
     }
 </script>
