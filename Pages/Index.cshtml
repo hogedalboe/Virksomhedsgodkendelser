@@ -189,7 +189,7 @@
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>CVR-nr</b><br />
-                        123456789
+                                     <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=24256790" target="_blank">123456789</a>
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Branche</b><br />
@@ -201,8 +201,8 @@
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>P-enheder med godkendelser</b><br />
-                        Holmbladsvej 2, 8600 Silkeborg<br />
-                        Hvidelvej 16, 7400 Herning<br />
+                        Holmbladsvej 2, 8600 Silkeborg<a href="https://www.google.com/maps/place/Holmbladsvej-2,-8600-Silkeborg" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                        Hvidelvej 16, 7400 Herning<a href="https://www.google.com/maps/place/Hvidelvej-16,-7400-Herning" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Godkendelser på alle p-enheder</b><br />
@@ -216,14 +216,39 @@
                 </div>
             </div>
         </div>
-        @*Approvement details*@
+        @*Approval details*@
         <div class="nhb-widget container nhb-margin-bottom">
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approvement-details" aria-expanded="false" aria-controls="approvement-details" style="width:100%;">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approval-details" aria-expanded="false" aria-controls="approval-details" style="width:100%;">
                 Godkendelsesoplysninger
             </button>
-            <div class="collapse" id="approvement-details">
+            <div class="collapse" id="approval-details">
                 <div class="card card-body">
-                    Vælg en godkendelse i tabellen for at se godkendelsesoplysninger.
+                    <div class="container nhb-margin-bottom">
+                        <b>P-enhed</b><br />
+                        <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=1017660779" target="_blank">12345678</a>, Holmbladsvej 2, 8600 Silkeborg<a href="https://www.google.com/maps/place/Holmbladsvej-2,-8600-Silkeborg" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Uddannelse</b><br />
+                        Smed
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Speciale</b><br />
+                        Klejnsmed
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Godkendelsesdato</b><br />
+                        01-07-2014
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Seneste ændring</b><br />
+                        01-07-2014
+                    </div>
+                    <div class="container">
+                        <b>Godkendelsesantal </b> <span class="badge badge-info">8</span><br /><br />
+                        <b>Igangværende aftaler </b> <span class="badge badge-info">8</span><br /><br />
+                        <b>Øvrige aftaler </b> <span class="badge badge-info">0</span><br /><br />
+                        <b>Ubenyttede godkendelser </b> <span class="badge badge-danger">0</span><br /><br />
+                    </div>
                 </div>
             </div>
         </div>
@@ -234,7 +259,7 @@
             </button>
             <div class="collapse" id="advanced-filters">
                 <div class="card card-body">
-                    @*Guide*@
+                    @*Filter guide*@
                     Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
 
                     @*Number of active contracts*@
@@ -254,6 +279,17 @@
                 </div>
             </div>
         </div>
+        @*App guide*@
+        <div class="nhb-widget container nhb-margin-bottom">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#help-widget" aria-expanded="false" aria-controls="help-widget" style="width:100%;">
+                Hjælp og vejledning
+            </button>
+            <div class="collapse" id="help-widget">
+                <div class="card card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+            </div>
+        </div>
         @*Exports*@
         <div class="nhb-widget container nhb-margin-bottom">
             <div class="btn-group" role="group" aria-label="Export options">
@@ -265,6 +301,13 @@
         </div>
     </div>
 </div>
+
+@*Bottom nav
+<div class="row">
+    <div class="col-lg-8">
+
+    </div>
+</div>*@
 
 <script>
     @*Construct url with query parameters and navigate to it*@
@@ -283,7 +326,7 @@
         {
             queryParameters += "pageindex=" + @Model.PageIndex + "&";
         }
-        
+
         @*Size*@
 
 
