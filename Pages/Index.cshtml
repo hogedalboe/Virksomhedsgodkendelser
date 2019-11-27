@@ -3,7 +3,7 @@
 @model IndexModel
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Virksomhedsgodkendelser";
 }
 
 <div class="row">
@@ -336,10 +336,10 @@
         {
             queryParameters += "search=" + search + "&";
         }
-        else if ("@Model.SearchParam" !== "")
+        @*else if ("@Model.SearchParam" !== "")
         {
             queryParameters += "search=@Model.SearchParam&";
-        }
+        }*@
 
 
         @*Navigate*@
