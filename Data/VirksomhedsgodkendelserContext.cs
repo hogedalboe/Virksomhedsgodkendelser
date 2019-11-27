@@ -16,5 +16,7 @@ namespace Virksomhedsgodkendelser.Data
         }
 
         public DbSet<Virksomhedsgodkendelser.Models.Company> Company { get; set; }
+
+        public DbSet<Virksomhedsgodkendelser.Models.Region> Region { get; set; }
     }
 }

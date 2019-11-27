@@ -16,18 +16,15 @@
                     Region
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-region">
-                    <div class="form-check dropdown-item">
-                        <input class="form-check-input" type="checkbox" value="" id="dropdown-region-item1">
-                        <label class="form-check-label" for="dropdown-region-item1">
-                            Region Hovedstaden
-                        </label>
-                    </div>
-                    <div class="form-check dropdown-item">
-                        <input class="form-check-input" type="checkbox" value="" id="dropdown-region-item2">
-                        <label class="form-check-label" for="dropdown-region-item2">
-                            Region Midtjylland
-                        </label>
-                    </div>
+                    @for (int i = 0; i < Model.Region.Count; i++)
+                    {
+                        <div class="form-check dropdown-item">
+                            <input class="form-check-input" type="checkbox" value="" id="dropdown-region-item@(i)">
+                            <label class="form-check-label" for="dropdown-region-item@(i)">
+                                @Html.DisplayFor(modelItem => Model.Region[i].RegionName)
+                            </label>
+                        </div>
+                    }
                 </div>
             </div>
             @*Municipality*@

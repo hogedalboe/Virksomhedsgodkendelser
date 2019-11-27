@@ -14,7 +14,9 @@ namespace Virksomhedsgodkendelser.Pages
     {
         private readonly Data.VirksomhedsgodkendelserContext _context;
 
+        // Data
         public IList<Company> Company { get; set; }
+        public IList<Region> Region { get; set; }
 
         // Paging
         public int PageIndex { get; set; }
@@ -66,6 +68,9 @@ namespace Virksomhedsgodkendelser.Pages
 
             PageSize = pagesize;
             SearchParam = search;
+
+            // Additional data
+            Region = await _context.Region.ToListAsync();
         }
     }
 }
