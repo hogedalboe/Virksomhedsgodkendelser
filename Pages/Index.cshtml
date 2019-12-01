@@ -278,7 +278,7 @@
                     @*Apply*@
                     <button class="btn btn-outline-info btn-sm nhb-margin-bottom" type="button" style="">Anvend</button>
                     @*Saved filters modal*@
-                    <button class="btn btn-outline-info btn-sm nhb-margin-bottom" type="button" style="" data-toggle="modal" data-target="#adminstrate-filters">Administrer filtreringer</button>
+                    <button class="btn btn-outline-info btn-sm nhb-margin-bottom" onclick="loadSavedFilters();" type="button" style="" data-toggle="modal" data-target="#adminstrate-filters">Administrer filtreringer</button>
                     <div class="modal fade" id="adminstrate-filters" tabindex="-1" role="dialog" aria-labelledby="Administrer filtreringer" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content nhb-margin-bottom">
@@ -291,16 +291,15 @@
                                 <div class="modal-body nhb-margin-bottom">
                                     @*Save filtration as*@
                                     <div class="input-group mb-3 nhb-margin-bottom">
-                                        <input type="text" class="form-control" placeholder="Gem nuværende filtrering" aria-label="Gem nuværende filtrering" aria-describedby="basic-addon2">
+                                        <input type="text" id="nhb-save-filters" class="form-control" onkeydown="saveFilterKeyEvent();" placeholder="Gem nuværende filtrering som" aria-label="Gem nuværende filtrering som" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
-                                            <button class="btn btn-outline-info btn-sm" type="button" style=""><i class="material-icons" style="color:darkgreen">add</i></button>
+                                            <button class="btn btn-outline-info btn-sm" type="button" style="" onclick="saveFilter();">Gem</button>
                                         </div>
                                     </div>
                                     @*List of saved filtrations*@
                                     <div class="nhb-margin-bottom">
-                                        <ul>
-                                            <li class="nhb-margin-bottom"><a onclick="" href="#" style="color:darkgreen;">filtrering for LUU 1</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick=""><span aria-hidden="true">&times;</span></button></li>
-                                            <li class="nhb-margin-bottom"><a onclick="" href="#" style="color:darkgreen;">filtrering for LUU 2</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick=""><span aria-hidden="true">&times;</span></button></li>
+                                        <ul id="nhb-saved-filters">
+                                            @**@
                                         </ul>
                                     </div>
                                 </div>
@@ -387,4 +386,96 @@
             navigateWithParameters({});
         }
     }
+
+    @*Handling saved filters (cookies)*@
+    function saveFilter()
+    {
+        var filterName = document.getElementById("nhb-save-filters").value;
+        if (filterName)
+        {
+            @*Store filters in cookie*@
+            var expiryDate = new Date();
+            expiryDate.setMonth(expiryDate.getMonth() + 3);
+
+            document.cookie = "FilterName1=" + filterName + "; expires=" + expiryDate.toUTCString();
+            document.cookie = "FilterParameters1=" + "?pageindex=3&" + "; expires=" + expiryDate.toUTCString();
+
+            @*If cookie storing was succesful, proceed to render*@
+            var ul = document.getElementById("nhb-saved-filters");
+            var li = document.createElement("li");
+            li.classList.add("nhb-margin-bottom");
+            li.innerHTML = '<li class="nhb-margin-bottom"><a onclick="" href="#" style="color:darkgreen;">' + filterName + '</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick="removeSavedFilter(this);"><span aria-hidden="true">&times;</span></button></li>';
+            ul.appendChild(li);
+        }
+
+        document.getElementById("nhb-save-filters").value = "";
+    }
+
+    @*Handle searching by keydown in the search form*@
+    function saveFilterKeyEvent()
+    {
+        if (event.key === 'Enter')
+        {
+            saveFilter();
+        }
+    }
+
+    @*Delete saved filter*@
+    function removeSavedFilter(element)
+    {
+        @*Remove from cookie*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Remove <li> from html*@
+        element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
+    }
+
+    @*Load saved filters from cookie when menu loads*@
+    function loadSavedFilters()
+    {
+        // Delete previous load...
+        //
+        //
+        //
+        //
+        //
+        //
+
+        var cookieString = document.cookie;
+
+        for (var i = 0; i < 1; i++) // BEMÆRK! Kun én iteration. Der skal kunne gemmes op til 10 filtre.
+        {
+            // Her skal der være en håndtering af flere cookie-par (i < 10)
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+            var cookies = cookieString.split('; ');
+            for (var j = 0; j < cookies.length; j++)
+            {
+                if (cookies[j].includes("FilterName1"))
+                {
+                    var cookieValue = cookies[j].split('=');
+                    
+                    @*Render as list item*@
+                    var ul = document.getElementById("nhb-saved-filters");
+                    var li = document.createElement("li");
+                    li.classList.add("nhb-margin-bottom");
+                    li.innerHTML = '<li class="nhb-margin-bottom"><a onclick="" href="#" style="color:darkgreen;">' + cookieValue[1] + '</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick="removeSavedFilter(this);"><span aria-hidden="true">&times;</span></button></li>';
+                    ul.appendChild(li);
+                }
+            }
+        }
+    }
+
 </script>
