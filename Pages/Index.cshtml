@@ -6,6 +6,41 @@
     ViewData["Title"] = "Virksomhedsgodkendelser";
 }
 
+<script>
+
+    @*Global variables*@
+    //
+    // https://www.javatpoint.com/javascript-global-variable
+    //
+    // var separator = "|||"
+    //
+    //
+    // var filterCookieName = "Filter=";
+    //
+    //
+    //
+    // var expiryDate = new Date();
+    //
+    //
+    //
+
+    @*Reset cookie expiration date*@
+    var expiryDate = new Date();
+    expiryDate.setMonth(expiryDate.getMonth() + 4);
+    var decodedCookieString = decodeURIComponent(document.cookie);
+    var cookies = decodedCookieString.split(';');
+    var cookieValue = "";
+    for (var i = 0; i < cookies.length; i++)
+    {
+        if (cookies[i].includes("Filters="))
+        {
+            var cookieValue = cookies[i].replace("Filters=", "");
+        }
+    }
+    document.cookie = "Filters=" + encodeURIComponent(cookieValue) + "; expires=" + expiryDate.toUTCString();
+
+</script>
+
 <div class="row">
     @*Filters*@
     <div class="col-lg-8">
@@ -343,6 +378,7 @@
 </div>*@
 
 <script>
+
     @*Construct url with query parameters and navigate to it*@
     function navigateWithParameters({
         pageindex = @Model.PageIndex,
