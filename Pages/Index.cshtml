@@ -298,13 +298,14 @@
                                     </div>
                                     @*List of saved filtrations*@
                                     <div class="nhb-margin-bottom">
-                                        <ul id="nhb-saved-filters">
+                                        <ul id="nhb-saved-filters" class="nhb-margin-bottom">
                                             @**@
                                         </ul>
                                     </div>
                                 </div>
+                                <p id="nhb-input-warning-text" style="margin-left:5%;color:red;font-size:14px;"></p>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fortryd</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </div>
@@ -391,14 +392,79 @@
     function saveFilter()
     {
         var filterName = document.getElementById("nhb-save-filters").value;
+
         if (filterName)
         {
-            @*Store filters in cookie*@
+            @* Example Name/Value of cookie: "Filters=Filtre for LUU 1:::?pageindex=3$|||Filtre for LUU 2:::?pageindex=9$ *@
+
+            @*Check if the filter name already exists and check the number of already existing filters*@
+            var nameAlreadyExists = false;
+            var numberOfExistingFilters = 0;
+
+            var decodedCookieString = decodeURIComponent(document.cookie);
+            var cookies = decodedCookieString.split(';');
+            for (var i = 0; i < cookies.length; i++)
+            {
+                if (cookies[i].includes("Filters="))
+                {
+                    var cookieValue = cookies[i].replace("Filters=", "");
+                    var filterPairs = cookieValue.split('|||');
+                    for (var j = 0; j < filterPairs.length; j++)
+                    {
+                        var cookieFilterNameAndFilterParameters = filterPairs[j].split(':::');
+                        var cookieFilterName = cookieFilterNameAndFilterParameters[0];
+
+                        if (filterName == cookieFilterName)
+                        {
+                            nameAlreadyExists = true;
+                        }
+
+                        numberOfExistingFilters++;
+                    }
+                }
+            }
+
+            @*Check if the filter name contains non-allowed characters*@
+            if (filterName.includes(';') ||
+                filterName.includes('=') ||
+                filterName.includes(':') ||
+                filterName.includes('|'))
+            {
+                document.getElementById("nhb-input-warning-text").innerHTML = "<i>Filternavnet må ikke indeholde tegnene:</i> ; = : |";
+                return;
+            }
+            else if (nameAlreadyExists)
+            {
+                document.getElementById("nhb-input-warning-text").innerHTML = "<i>Et filter med dette navn eksisterer allerede.</i>";
+                return;
+            }
+            else if (numberOfExistingFilters > 9)
+            {
+                document.getElementById("nhb-input-warning-text").innerHTML = "<i>Du kan kun gemme op til 10 filtre.</i>";
+                return;
+            }
+            else
+            {
+                document.getElementById("nhb-input-warning-text").innerHTML = "";
+            }
+
+            @*Get current filter parameters*@
+            var filterParameters = window.location.href;
+
+            @*Write the new filter to cookie*@
             var expiryDate = new Date();
             expiryDate.setMonth(expiryDate.getMonth() + 3);
 
-            document.cookie = "FilterName1=" + filterName + "; expires=" + expiryDate.toUTCString();
-            document.cookie = "FilterParameters1=" + "?pageindex=3&" + "; expires=" + expiryDate.toUTCString();
+            var declaredCookieName = "Filters=";
+            decodedCookieString = decodedCookieString.replace(declaredCookieName, '');
+
+            var separator = "";
+            if (decodedCookieString)
+            {
+                separator = "|||";
+            }
+
+            document.cookie = declaredCookieName + encodeURIComponent(decodedCookieString + separator + filterName + ":::" + filterParameters) + "; expires=" + expiryDate.toUTCString();
 
             @*If cookie storing was succesful, proceed to render*@
             var ul = document.getElementById("nhb-saved-filters");
@@ -424,13 +490,49 @@
     function removeSavedFilter(element)
     {
         @*Remove from cookie*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        var filterNameToRemove = element.previousSibling.innerHTML;
+
+        var newCookieValue = "";
+
+        var decodedCookieString = decodeURIComponent(document.cookie);
+        var cookies = decodedCookieString.split(';');
+        for (var i = 0; i < cookies.length; i++)
+        {
+            if (cookies[i].includes("Filters="))
+            {
+                var cookieValue = cookies[i].replace("Filters=", "");
+                var filterPairs = cookieValue.split('|||');
+                for (var j = 0; j < filterPairs.length; j++)
+                {
+                    var cookieFilterNameAndFilterParameters = filterPairs[j].split(':::');
+
+                    var cookieFilterName = cookieFilterNameAndFilterParameters[0];
+                    var cookieFilterParameters = cookieFilterNameAndFilterParameters[1];
+
+                    if (filterNameToRemove != cookieFilterName && cookieFilterName != "")
+                    {
+                        if (j === 0)
+                        {
+                            newCookieValue += cookieFilterName + ":::" + cookieFilterParameters;
+                        }
+                        else if (newCookieValue)
+                        {
+                            newCookieValue += "|||" + cookieFilterName + ":::" + cookieFilterParameters;
+                        }
+                        else
+                        {
+                            newCookieValue += cookieFilterName + ":::" + cookieFilterParameters;
+                        }
+                    }
+                }
+
+                var declaredCookieName = "Filters=";
+                var expiryDate = new Date();
+                expiryDate.setMonth(expiryDate.getMonth() + 3);
+
+                document.cookie = declaredCookieName + encodeURIComponent(newCookieValue) + "; expires=" + expiryDate.toUTCString();
+            }
+        }
 
         @*Remove <li> from html*@
         element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
@@ -439,40 +541,42 @@
     @*Load saved filters from cookie when menu loads*@
     function loadSavedFilters()
     {
-        // Delete previous load...
-        //
-        //
-        //
-        //
-        //
-        //
+        @*Remove filters, input text and warnings previously added to document*@
+        document.getElementById("nhb-saved-filters").innerHTML = "";
+        document.getElementById("nhb-save-filters").value = "";
+        document.getElementById("nhb-input-warning-text").innerHTML = "";
 
-        var cookieString = document.cookie;
+        @**@
 
-        for (var i = 0; i < 1; i++) // BEMÆRK! Kun én iteration. Der skal kunne gemmes op til 10 filtre.
+        var decodedCookieString = decodeURIComponent(document.cookie); @*https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent*@
+
+        var cookies = decodedCookieString.split(';');
+
+        for (var i = 0; i < cookies.length; i++)
         {
-            // Her skal der være en håndtering af flere cookie-par (i < 10)
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-
-            var cookies = cookieString.split('; ');
-            for (var j = 0; j < cookies.length; j++)
+            if (cookies[i].includes("Filters="))
             {
-                if (cookies[j].includes("FilterName1"))
+                var cookieValue = cookies[i].replace("Filters=", "")
+
+                @* Example cookieValue: "Filters=Filtre for LUU 1:::?pageindex=3$|||Filtre for LUU 2:::?pageindex=9$ *@
+
+                var filterPairs = cookieValue.split('|||');
+
+                for (var j = 0; j < filterPairs.length; j++)
                 {
-                    var cookieValue = cookies[j].split('=');
-                    
+                    var cookieFilterNameAndFilterParameters = filterPairs[j].split(':::');
+                    var cookieFilterName = cookieFilterNameAndFilterParameters[0];
+                    var cookieFilterParameters = cookieFilterNameAndFilterParameters[1];
+
                     @*Render as list item*@
-                    var ul = document.getElementById("nhb-saved-filters");
-                    var li = document.createElement("li");
-                    li.classList.add("nhb-margin-bottom");
-                    li.innerHTML = '<li class="nhb-margin-bottom"><a onclick="" href="#" style="color:darkgreen;">' + cookieValue[1] + '</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick="removeSavedFilter(this);"><span aria-hidden="true">&times;</span></button></li>';
-                    ul.appendChild(li);
+                    if (cookieFilterName)
+                    {
+                        var ul = document.getElementById("nhb-saved-filters");
+                        var li = document.createElement("li");
+                        li.classList.add("nhb-margin-bottom");
+                        li.innerHTML = '<li class="nhb-margin-bottom"><a onclick="" href="' + cookieFilterParameters + '" style="color:darkgreen;">' + cookieFilterName + '</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick="removeSavedFilter(this);"><span aria-hidden="true">&times;</span></button></li>';
+                        ul.appendChild(li);
+                    }
                 }
             }
         }
