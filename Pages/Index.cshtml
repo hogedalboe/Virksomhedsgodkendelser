@@ -54,7 +54,23 @@
                     @for (int i = 0; i < Model.Region.Count; i++)
                     {
                         <div class="form-check dropdown-item">
-                            <input class="form-check-input" type="checkbox" value="" id="dropdown-region-item@(i)">
+                            <input class="form-check-input" type="checkbox" value="@(i)" id="dropdown-region-item@(i)" onchange="alert(@(i));">
+                            @*
+                            //
+                            //
+                            //
+                            //
+                            // KALD navgigate funtion og reload server med region som parameter. Brug value som regions-id (ikke ID).
+                            //
+                            //
+                            // Undgå at dropdown lukkes, eller at der navigeres, før brugere er færdig med at sortere?
+                            // https://stackoverflow.com/questions/25089297/avoid-dropdown-menu-close-on-click-inside
+                            //
+                            //
+                            //
+                            //
+                            //
+                            *@
                             <label class="form-check-label" for="dropdown-region-item@(i)">
                                 @Html.DisplayFor(modelItem => Model.Region[i].RegionName)
                             </label>
