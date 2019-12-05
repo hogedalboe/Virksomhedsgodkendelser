@@ -10,6 +10,17 @@ namespace Virksomhedsgodkendelser.Models
     public class Region
     {
         public int ID { get; set; }
+
+        public int RegionCode { get; set; }
+
         public string RegionName { get; set; }
     }
+
+    /*
+     * 1081	Region Nordjylland
+     * 1082	Region Midtjylland
+     * 1083	Region Syddanmark
+     * 1084	Region Hovedstaden
+     * 1085	Region Sjælland
+     */
 }

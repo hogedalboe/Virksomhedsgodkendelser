@@ -15,6 +15,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Region.ID" />
             <div class="form-group">
+                <label asp-for="Region.RegionCode" class="control-label"></label>
+                <input asp-for="Region.RegionCode" class="form-control" />
+                <span asp-validation-for="Region.RegionCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Region.RegionName" class="control-label"></label>
                 <input asp-for="Region.RegionName" class="form-control" />
                 <span asp-validation-for="Region.RegionName" class="text-danger"></span>

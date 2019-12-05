@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Virksomhedsgodkendelser.Data;
 
 namespace Virksomhedsgodkendelser.Migrations
 {
     [DbContext(typeof(VirksomhedsgodkendelserContext))]
-    partial class VirksomhedsgodkendelserContextModelSnapshot : ModelSnapshot
+    [Migration("20191205092002_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace Virksomhedsgodkendelser.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("RegionCode")
-                        .HasColumnType("int");
 
                     b.Property<string>("RegionName")
                         .HasColumnType("nvarchar(max)");

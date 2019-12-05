@@ -9,8 +9,8 @@ using Virksomhedsgodkendelser.Data;
 namespace Virksomhedsgodkendelser.Migrations
 {
     [DbContext(typeof(VirksomhedsgodkendelserContext))]
-    [Migration("20191127000423_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191205120954_RegionCode")]
+    partial class RegionCode
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,9 @@ namespace Virksomhedsgodkendelser.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("RegionCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("RegionName")
                         .HasColumnType("nvarchar(max)");
