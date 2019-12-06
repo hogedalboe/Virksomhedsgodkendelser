@@ -9,8 +9,8 @@ using Virksomhedsgodkendelser.Data;
 namespace Virksomhedsgodkendelser.Migrations
 {
     [DbContext(typeof(VirksomhedsgodkendelserContext))]
-    [Migration("20191205120954_RegionCode")]
-    partial class RegionCode
+    [Migration("20191205220507_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

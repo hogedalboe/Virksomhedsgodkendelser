@@ -11,6 +11,10 @@
     margin-bottom: 10px;
 }
 
+.nhb-margin-top {
+    margin-top: 10px;
+}
+
 /* Loading spinner
 ----------------------------------------------------------*/
 .loader 

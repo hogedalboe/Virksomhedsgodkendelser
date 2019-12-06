@@ -7,7 +7,6 @@
 }
 
 <script>
-
     @*Global variables*@
     //
     // https://www.javatpoint.com/javascript-global-variable
@@ -46,7 +45,7 @@
     <div class="col-lg-8">
         <div class="container nhb-margin-bottom">
             @*Region*@
-            <div class="btn-group btn-group-sm nhb-margin-bottom" role="group" aria-label="Table filters">
+            <div id="nhb-dropdown-region-container" class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
                 <button id="dropdown-region" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Region
                 </button>
@@ -54,23 +53,7 @@
                     @for (int i = 0; i < Model.Region.Count; i++)
                     {
                         <div class="form-check dropdown-item">
-                            <input class="form-check-input" type="checkbox" value="@(i)" id="dropdown-region-item@(i)" onchange="">
-                            @*
-                            //
-                            //
-                            //
-                            //
-                            // KALD navgigate funtion og reload server med region som parameter. Brug value som regions-id (ikke ID).
-                            //
-                            //
-                            // Undgå at dropdown lukkes, eller at der navigeres, før brugere er færdig med at sortere?
-                            // https://stackoverflow.com/questions/25089297/avoid-dropdown-menu-close-on-click-inside
-                            //
-                            //
-                            //
-                            //
-                            //
-                            *@
+                            <input class="form-check-input" type="checkbox" value="@(Model.Region[i].RegionCode)" id="dropdown-region-item@(i)" onchange="">
                             <label class="form-check-label" for="dropdown-region-item@(i)">
                                 @Html.DisplayFor(modelItem => Model.Region[i].RegionName)
                             </label>
@@ -79,7 +62,7 @@
                 </div>
             </div>
             @*Municipality*@
-            <div class="btn-group btn-group-sm nhb-margin-bottom" role="group" aria-label="Table filters">
+            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
                 <button id="dropdown-municipality" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Kommune
                 </button>
@@ -89,7 +72,7 @@
                 </div>
             </div>
             @*Education*@
-            <div class="btn-group btn-group-sm nhb-margin-bottom" role="group" aria-label="Table filters">
+            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
                 <button id="dropdow-education" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Uddannelse
                 </button>
@@ -99,7 +82,7 @@
                 </div>
             </div>
             @*Specialisation*@
-            <div class="btn-group btn-group-sm nhb-margin-bottom" role="group" aria-label="Table filters">
+            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
                 <button id="dropdow-specialisation" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Speciale
                 </button>
@@ -109,7 +92,7 @@
                 </div>
             </div>
             @*Show results per page*@
-            <div class="btn-group btn-group-sm nhb-margin-bottom" role="group" aria-label="Table filters">
+            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
                 <button id="dropdow-specialisation" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Antal resultater per side">
                     Vis
                 </button>
@@ -272,10 +255,8 @@
             <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approval-details" aria-expanded="false" aria-controls="approval-details" style="width:100%;">
                 Godkendelsesoplysninger
             </button>
-            <div class="collapse" id="approval-details-loader">
-                <div class="container">
-                    <div class="loader"></div>
-                </div>
+            <div class="container nhb-margin-bottom nhb-margin-top" id="approval-details-loader">
+                @*Loading spinner: See JS*@
             </div>
             <div class="collapse" id="approval-details">
                 <div class="card card-body">
@@ -426,10 +407,41 @@
         {
             queryParameters += "search=" + search + "&";
         }
-        @*else if ("@Model.SearchParam" !== "")
-        {
-            queryParameters += "search=@Model.SearchParam&";
-        }*@
+
+        @*Region*@
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Municipality*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Education*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Specialisation*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
 
 
         @*Navigate*@
@@ -645,21 +657,15 @@
         $('#approval-details').collapse("show");
 
         @*Initiate loading spinner before fetching approval data*@
-        $('#approval-details-loader').collapse("show");
+        document.getElementById("approval-details-loader").innerHTML = "<div class='loader' style='margin:auto;'></div>";
 
         @*Fetch approval data*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        alert('Fetch data...');
 
         @*Remove loading spinner*@
-        $('#approval-details-loader').collapse("hide");
+        document.getElementById("approval-details-loader").innerHTML = "";
     }
+
+
 
 </script>

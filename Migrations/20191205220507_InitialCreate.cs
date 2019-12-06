@@ -27,6 +27,7 @@ namespace Virksomhedsgodkendelser.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RegionCode = table.Column<int>(nullable: false),
                     RegionName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
