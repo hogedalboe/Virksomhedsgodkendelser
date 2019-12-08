@@ -13,6 +13,12 @@
     <Compile Remove="Migrations\20191205092002_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20191205120954_RegionCode.cs" />
     <Compile Remove="Migrations\20191205120954_RegionCode.Designer.cs" />
+    <Compile Remove="Migrations\20191205220507_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191205220507_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191208152327_MunicipalityAdded.cs" />
+    <Compile Remove="Migrations\20191208152327_MunicipalityAdded.Designer.cs" />
+    <Compile Remove="Migrations\20191208152836_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191208152836_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

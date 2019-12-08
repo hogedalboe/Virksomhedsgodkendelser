@@ -39,6 +39,27 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.ToTable("Company");
                 });
 
+            modelBuilder.Entity("Virksomhedsgodkendelser.Models.Municipality", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MunicipalityCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MunicipalityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RegionCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Municipality");
+                });
+
             modelBuilder.Entity("Virksomhedsgodkendelser.Models.Region", b =>
                 {
                     b.Property<int>("ID")

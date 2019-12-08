@@ -17,6 +17,7 @@ namespace Virksomhedsgodkendelser.Pages
         // Data
         public IList<Company> Company { get; set; }
         public IList<Region> Region { get; set; }
+        public IList<Municipality> Municipality { get; set; }
 
         // Paging
         public int PageIndex { get; set; }
@@ -27,6 +28,9 @@ namespace Virksomhedsgodkendelser.Pages
         // Filter and sorting parameters
         public string SearchParam { get; set; }
         public string SortParam { get; set; }
+
+        // Geographical parameters
+        public string[] RegionCodes { get; set; }
 
         // Filter data 
         //public string[] Regions ...
@@ -43,7 +47,7 @@ namespace Virksomhedsgodkendelser.Pages
             _context = context;
         }
 
-        public async Task OnGetAsync(int pageindex = 1, int pagesize = 50, string search = "")
+        public async Task OnGetAsync(int pageindex = 1, int pagesize = 50, string search = "", string regioncodes = "")
         {
             // Return only the page-delimited interval of companies
             Company = await _context.Company.ToListAsync();
@@ -52,7 +56,7 @@ namespace Virksomhedsgodkendelser.Pages
             PageCount = 10;
             CompanyCount = 234;
 
-            // Set parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&
+            // Set parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&region=1081-1082&
 
             // Page range
             if (pageindex > 0 && pageindex <= PageCount)
@@ -69,8 +73,53 @@ namespace Virksomhedsgodkendelser.Pages
             PageSize = pagesize;
             SearchParam = search;
 
-            // Additional data
+            // Geographical data
+            RegionCodes = regioncodes.Split("-"); // Used to initialize checked status on input element
             Region = await _context.Region.ToListAsync();
+
+            Municipality = await _context.Municipality.ToListAsync();
+            List<Municipality> toKeepMunicipality = new List<Municipality>();
+
+            // Sort by region
+            if (regioncodes != "")
+            {
+                string[] arrRegionCodes = regioncodes.Split("-");
+
+                // Get only approvals in region
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+
+                // Show only municipalities in region
+                foreach (string strRegionCode in arrRegionCodes)
+                {
+                    for (int i = 0; i < Municipality.Count; i++)
+                    {
+                        if (Municipality[i].RegionCode == Convert.ToInt32(strRegionCode))
+                        {
+                            toKeepMunicipality.Add(Municipality[i]);
+                        }
+                    }
+                }
+                Municipality = toKeepMunicipality;
+            }
+
+            // Sort by municipality
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
         }
     }
 }

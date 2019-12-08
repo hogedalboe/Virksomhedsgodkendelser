@@ -22,6 +22,21 @@ namespace Virksomhedsgodkendelser.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Municipality",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MunicipalityCode = table.Column<int>(nullable: false),
+                    MunicipalityName = table.Column<string>(nullable: true),
+                    RegionCode = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Municipality", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Region",
                 columns: table => new
                 {
@@ -40,6 +55,9 @@ namespace Virksomhedsgodkendelser.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Company");
+
+            migrationBuilder.DropTable(
+                name: "Municipality");
 
             migrationBuilder.DropTable(
                 name: "Region");
