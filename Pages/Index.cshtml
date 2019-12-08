@@ -44,6 +44,26 @@
     @*Filters*@
     <div class="col-lg-8">
         <div class="container nhb-margin-bottom">
+            @*Education*@
+            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
+                <button id="dropdow-education" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Uddannelse
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdown-education">
+                    <a class="dropdown-item" href="#">Smed</a>
+                    <a class="dropdown-item" href="#">Datatekniker</a>
+                </div>
+            </div>
+            @*Specialisation*@
+            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
+                <button id="dropdow-specialisation" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Speciale
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
+                    <a class="dropdown-item" href="#">Klejnsmed</a>
+                    <a class="dropdown-item" href="#">Infrastruktur</a>
+                </div>
+            </div>
             @*Region*@
             <div id="nhb-dropdown-region-container" class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
                 <button id="dropdown-region" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,26 +89,6 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown-municipality">
                     <a class="dropdown-item" href="#">Morsø</a>
                     <a class="dropdown-item" href="#">Frederiksberg</a>
-                </div>
-            </div>
-            @*Education*@
-            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
-                <button id="dropdow-education" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Uddannelse
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdown-education">
-                    <a class="dropdown-item" href="#">Smed</a>
-                    <a class="dropdown-item" href="#">Datatekniker</a>
-                </div>
-            </div>
-            @*Specialisation*@
-            <div class="btn-group btn-group-sm nhb-margin-bottom dropdown" role="group" aria-label="Table filters">
-                <button id="dropdow-specialisation" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Speciale
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
-                    <a class="dropdown-item" href="#">Klejnsmed</a>
-                    <a class="dropdown-item" href="#">Infrastruktur</a>
                 </div>
             </div>
             @*Show results per page*@
@@ -255,10 +255,10 @@
             <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approval-details" aria-expanded="false" aria-controls="approval-details" style="width:100%;">
                 Godkendelsesoplysninger
             </button>
-            <div class="container nhb-margin-bottom nhb-margin-top" id="approval-details-loader">
-                @*Loading spinner: See JS*@
-            </div>
             <div class="collapse" id="approval-details">
+                <div class="container nhb-margin-bottom nhb-margin-top" id="approval-details-loader">
+                    @*Loading spinner: See JS*@
+                </div>
                 <div class="card card-body">
                     <div class="container nhb-margin-bottom">
                         <b>P-enhed</b><br />
@@ -652,20 +652,62 @@
     }
 
     @*Focus on approval*@
-    function focusApproval(approvalID)
+    async function focusApproval(approvalID)
     {
-        $('#approval-details').collapse("show");
+        @*Make sure the clicked approval is not already in focus*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Remove previously loaded approval*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Show approval collapse element*@
+        document.getElementById("approval-details").classList.add("show");
 
         @*Initiate loading spinner before fetching approval data*@
-        document.getElementById("approval-details-loader").innerHTML = "<div class='loader' style='margin:auto;'></div>";
+        await controlSpinner("approval-details-loader", true);
 
         @*Fetch approval data*@
         alert('Fetch data...');
 
         @*Remove loading spinner*@
-        document.getElementById("approval-details-loader").innerHTML = "";
+        await controlSpinner("approval-details-loader", false);
     }
 
+    @*Control spinner*@
+    function controlSpinner(id, spin)
+    {
+        if (spin)
+        {
+            document.getElementById(id).innerHTML = "<div class='loader' style='margin:auto;'></div>";
+        }
+        else
+        {
+            document.getElementById(id).innerHTML = "";
+        }
 
+        @*Make sure load spinner is visible before continuing*@
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve('resolved');
+            }, 1000);
+        });
+    }
 
 </script>
