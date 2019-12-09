@@ -1,0 +1,186 @@
+﻿@page
+@model Virksomhedsgodkendelser.Pages.Approvals.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].CVRnr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].Pnr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].Pname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].StreetAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].PostalCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].EducationCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].EducationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].SpecialisationCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].SpecialisationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].Limitation1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].Limitation2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].ApprovalCreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].ApprovalDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].ApprovalQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].ApprovalsInUse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].OtherApprovalsInUse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].RegionCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].MunicipalCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].BusinessCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].BusinessName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].CorporateStructureCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].CorporateStructureName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].Website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approval[0].CompanyStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Approval) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CVRnr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pnr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StreetAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EducationCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EducationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialisationCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialisationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Limitation1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Limitation2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovalCreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovalQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovalsInUse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OtherApprovalsInUse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegionCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MunicipalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorporateStructureCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorporateStructureName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyStatus)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

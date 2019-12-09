@@ -1,0 +1,37 @@
+﻿@page
+@model Virksomhedsgodkendelser.Pages.Districts.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>District</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.District.DistrictCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.District.DistrictCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.District.DistrictName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.District.DistrictName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.District.MunicipalityCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.District.MunicipalityCode)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.District.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

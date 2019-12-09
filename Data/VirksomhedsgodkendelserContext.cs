@@ -20,5 +20,9 @@ namespace Virksomhedsgodkendelser.Data
         public DbSet<Virksomhedsgodkendelser.Models.Region> Region { get; set; }
 
         public DbSet<Virksomhedsgodkendelser.Models.Municipality> Municipality { get; set; }
+
+        public DbSet<Virksomhedsgodkendelser.Models.District> District { get; set; }
+
+        public DbSet<Virksomhedsgodkendelser.Models.Approval> Approval { get; set; }
     }
 }

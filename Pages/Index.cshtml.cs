@@ -18,6 +18,8 @@ namespace Virksomhedsgodkendelser.Pages
         public IList<Company> Company { get; set; }
         public IList<Region> Region { get; set; }
         public IList<Municipality> Municipality { get; set; }
+        public IList<District> District { get; set; }
+        public IList<Approval> Approval { get; set; }
 
         // Paging
         public int PageIndex { get; set; }
@@ -56,6 +58,9 @@ namespace Virksomhedsgodkendelser.Pages
             Company = await _context.Company.ToListAsync(); ////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // Approval data
+            Approval = await _context.Approval.ToListAsync();
 
             // Geographical data
             RegionCodes = regioncodes.Split("-");

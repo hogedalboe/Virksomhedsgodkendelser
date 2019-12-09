@@ -133,47 +133,71 @@
         @*Table*@
         <div class="nhb-widget container">
             @*Fill companies to table*@
-            <table class="table table-striped">
+            <table class="table-sm table-striped">
                 <thead class="thead-light">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Company[0].ID)
+                            <div onclick="sortByColumn();">
+                                @Html.DisplayNameFor(model => model.Approval[0].Pname)
+                            </div>
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Company[0].Pnr)
+                            <div onclick="sortByColumn();">
+                                @Html.DisplayNameFor(model => model.Approval[0].PostalCode)
+                            </div>
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Company[0].Virksomhedsnavn)
+                            <div onclick="sortByColumn();">
+                                @Html.DisplayNameFor(model => model.Approval[0].City)
+                            </div>
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Company[0].CVRnr)
+                            <div onclick="sortByColumn();">
+                                @Html.DisplayNameFor(model => model.Approval[0].EducationName)
+                            </div>
                         </th>
-                        <th></th>
+                        <th>
+                            <div onclick="sortByColumn();">
+                                @Html.DisplayNameFor(model => model.Approval[0].SpecialisationName)
+                            </div>
+                        </th>
+                        <th>
+                            <div onclick="sortByColumn();">
+                                @Html.DisplayNameFor(model => model.Approval[0].ApprovalDate)
+                            </div>
+                        </th>
+                        <th>
+                            <div onclick="sortByColumn();">
+                                @Html.DisplayNameFor(model => model.Approval[0].ApprovalQuantity)
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Company)
+                    @foreach (var item in Model.Approval)
                     {
                         <tr onclick="focusApproval(@Html.DisplayFor(modelItem => item.ID));">
                             <td>
-                                @Html.DisplayFor(modelItem => item.ID)
+                                @Html.DisplayFor(modelItem => item.Pname)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Pnr)
+                                @Html.DisplayFor(modelItem => item.PostalCode)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Virksomhedsnavn)
+                                @Html.DisplayFor(modelItem => item.City)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.CVRnr)
+                                @Html.DisplayFor(modelItem => item.EducationName)
                             </td>
-
                             <td>
-                                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                                @Html.DisplayFor(modelItem => item.SpecialisationName)
                             </td>
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ApprovalDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ApprovalQuantity)
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -237,10 +261,6 @@
                         <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=24256790" target="_blank" style="color:darkgreen;">123456789</a>
                     </div>
                     <div class="container nhb-margin-bottom">
-                        <b>Branche</b><br />
-                        Fremstilling af andre værktøjsmaskiner
-                    </div>
-                    <div class="container nhb-margin-bottom">
                         <b>Selskabsform</b><br />
                         Aktieselskab
                     </div>
@@ -274,6 +294,10 @@
                     <div class="container nhb-margin-bottom">
                         <b>P-enhed</b><br />
                         <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=1017660779" target="_blank" style="color:darkgreen;">12345678</a>, Holmbladsvej 2, 8600 Silkeborg<a href="https://www.google.com/maps/place/Holmbladsvej-2,-8600-Silkeborg" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                    </div>
+                    <div class="container nhb-margin-bottom">
+                        <b>Branche</b><br />
+                        Fremstilling af andre værktøjsmaskiner
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Uddannelse</b><br />
@@ -832,6 +856,21 @@
                 resolve('resolved');
             }, 1000);
         });
+    }
+
+    @*Sort by column*@
+    function sortByColumn()
+    {
+        alert("hej");
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
     }
 
 </script>
