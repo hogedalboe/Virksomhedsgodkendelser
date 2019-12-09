@@ -31,12 +31,8 @@ namespace Virksomhedsgodkendelser.Pages
 
         // Geographical parameters
         public string[] RegionCodes { get; set; }
+        public string[] MunicipalityCodes { get; set; }
 
-        // Filter data 
-        //public string[] Regions ...
-        //public string[] Municipalities ...
-        //public string[] Educations ...
-        //public string[] Specialisations ...
 
         // Focus
         public string CompanyFocus { get; set; } // Use the API to fetch data about individual companies, instead of filling the browser with all 50 of them?
@@ -47,45 +43,32 @@ namespace Virksomhedsgodkendelser.Pages
             _context = context;
         }
 
-        public async Task OnGetAsync(int pageindex = 1, int pagesize = 50, string search = "", string regioncodes = "")
+        public async Task OnGetAsync(
+            int pageindex = 1, 
+            int pagesize = 50, 
+            string search = "", 
+            string regioncodes = "", 
+            string municipalitycodes = "")
         {
-            // Return only the page-delimited interval of companies
-            Company = await _context.Company.ToListAsync();
+            // Parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&regioncodes=1081-1082&municipalitycodes=740-101&
 
-            // Determine page and row count from data
-            PageCount = 10;
-            CompanyCount = 234;
-
-            // Set parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&region=1081-1082&
-
-            // Page range
-            if (pageindex > 0 && pageindex <= PageCount)
-            {
-                PageIndex = pageindex;
-            }
-            else
-            {
-                PageIndex = 1;
-            }
-            
-            // Page size
-
-            PageSize = pagesize;
-            SearchParam = search;
+            // This will be irrelevant once approvals are structured in the database. Thereafter, company data should be API-fetched on CompanyFocus.
+            Company = await _context.Company.ToListAsync(); ////////////////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Geographical data
-            RegionCodes = regioncodes.Split("-"); // Used to initialize checked status on input element
+            RegionCodes = regioncodes.Split("-");
             Region = await _context.Region.ToListAsync();
-
+            MunicipalityCodes = municipalitycodes.Split("-"); 
             Municipality = await _context.Municipality.ToListAsync();
-            List<Municipality> toKeepMunicipality = new List<Municipality>();
 
-            // Sort by region
+            // Filter by region
             if (regioncodes != "")
             {
                 string[] arrRegionCodes = regioncodes.Split("-");
 
-                // Get only approvals in region
+                // Remove approvals not in region
                 //
                 //
                 //
@@ -96,17 +79,41 @@ namespace Virksomhedsgodkendelser.Pages
                 //
 
                 // Show only municipalities in region
-                foreach (string strRegionCode in arrRegionCodes)
+                for (int i = Municipality.Count-1; i >= 0; i--)
                 {
-                    for (int i = 0; i < Municipality.Count; i++)
+                    if (!arrRegionCodes.Contains(Municipality[i].RegionCode.ToString()))
                     {
-                        if (Municipality[i].RegionCode == Convert.ToInt32(strRegionCode))
-                        {
-                            toKeepMunicipality.Add(Municipality[i]);
-                        }
+                        Municipality.Remove(Municipality[i]);
                     }
                 }
-                Municipality = toKeepMunicipality;
+            }
+
+            // Sort by region
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+            // Filter by municipality
+            if (municipalitycodes != "")
+            {
+                string[] arrMunicipalityCodes = municipalitycodes.Split("-");
+
+                // Remove approvals not in municipality
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
             }
 
             // Sort by municipality
@@ -119,7 +126,64 @@ namespace Virksomhedsgodkendelser.Pages
             //
             //
             //
+
+            // Search through every string and substring related to the approval
+            SearchParam = search;
             //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+
+
+
+            /*--------------------- Pagination -------------------------*/ // THIS SHOULD BE THE LAST STEP OF THE MODEL-VIEW LOADING!
+
+            // Determine page and row count from remaining approval items
+            PageSize = pagesize;
+            PageCount = 10;
+            CompanyCount = 234;
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+            // Default page or requested page
+            if (pageindex > 0 && pageindex <= PageCount)
+            {
+                PageIndex = pageindex;
+            }
+            else
+            {
+                PageIndex = 1;
+            }
+
+            // Page size and page scope (+/- 5 pages)
+            //
+            //
+            //
+            //
+            // Remove approvals not on the requested page
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+            /*----------------------------------------------------------*/
         }
     }
 }

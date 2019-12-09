@@ -7,22 +7,6 @@
 }
 
 <script>
-    @*Global variables*@
-    //
-    // https://www.javatpoint.com/javascript-global-variable
-    //
-    // var separator = "|||"
-    //
-    //
-    // var filterCookieName = "Filter=";
-    //
-    //
-    //
-    // var expiryDate = new Date();
-    //
-    //
-    //
-
     @*Reset cookie expiration date*@
     var expiryDate = new Date();
     expiryDate.setMonth(expiryDate.getMonth() + 4);
@@ -37,7 +21,6 @@
         }
     }
     document.cookie = "Filters=" + encodeURIComponent(cookieValue) + "; expires=" + expiryDate.toUTCString();
-
 </script>
 
 <div class="row">
@@ -98,8 +81,17 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown-municipality">
                     @for (int i = 0; i < Model.Municipality.Count; i++)
                     {
+                        string check = "";
+                        foreach (string strMunicipalityCode in Model.MunicipalityCodes)
+                        {
+                            if (Model.Municipality[i].MunicipalityCode.ToString() == strMunicipalityCode)
+                            {
+                                check = "checked";
+                            }
+                        }
+                        
                         <div class="form-check dropdown-item">
-                            <input class="form-check-input" type="checkbox" value="@(Model.Municipality[i].MunicipalityCode)" id="dropdown-municipality-item@(i)" onchange="">
+                            <input class="form-check-input" type="checkbox" value="@(Model.Municipality[i].MunicipalityCode)" @(check) id="dropdown-municipality-item@(i)" onchange="navigateWithParameters({});">
                             <label class="form-check-label" for="dropdown-municipality-item@(i)">
                                 @Html.DisplayFor(modelItem => Model.Municipality[i].MunicipalityName)
                             </label>
@@ -230,6 +222,9 @@
                 Virksomhedsoplysninger
             </button>
             <div class="collapse" id="company-details">
+                <div id="company-details-loader">
+                    @*Loading spinner: See JS*@
+                </div>
                 <div class="card card-body">
                     <div class="container nhb-margin-bottom">
                         <b>Virksomhed</b><br />
@@ -272,7 +267,7 @@
                 Godkendelsesoplysninger
             </button>
             <div class="collapse" id="approval-details">
-                <div class="container nhb-margin-bottom nhb-margin-top" id="approval-details-loader">
+                <div id="approval-details-loader">
                     @*Loading spinner: See JS*@
                 </div>
                 <div class="card card-body">
@@ -415,7 +410,14 @@
         }
 
         @*Size*@
-
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
 
         @*Search*@
         var search = document.getElementById("nhb-search").value;
@@ -452,13 +454,31 @@
         }
 
         @*Municipality*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        var municipalitySelected = false;
+        var municipalitycodes = "";
+        for (var i = 0; i < @(Model.Municipality.Count); i++)
+        {
+            var id = "dropdown-municipality-item" + i.toString();
+            var element = document.getElementById(id);
+
+            if (element.checked == true)
+            {
+                if (municipalitySelected == false) {
+                    municipalitySelected = true;
+                    municipalitycodes += "municipalitycodes="
+                    municipalitycodes += element.value.toString();
+                }
+                else
+                {
+                    municipalitycodes += "-" + element.value.toString();
+                }
+            }
+
+        }
+        if (municipalitySelected)
+        {
+            queryParameters += municipalitycodes + "&";
+        }
 
         @*Education*@
         //
@@ -650,8 +670,6 @@
         document.getElementById("nhb-save-filters").value = "";
         document.getElementById("nhb-input-warning-text").innerHTML = "";
 
-        @**@
-
         var decodedCookieString = decodeURIComponent(document.cookie); @*https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent*@
 
         var cookies = decodedCookieString.split(';');
@@ -698,11 +716,19 @@
         //
         //
         //
+
+        @*Indicate via styling that a certain row (approval) has been selected in the table. Remove this styling from all other rows*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
         //
         //
 
         @*Remove previously loaded approval*@
-        //
         //
         //
         //
@@ -720,9 +746,72 @@
 
         @*Fetch approval data*@
         alert('Fetch data...');
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
 
         @*Remove loading spinner*@
         await controlSpinner("approval-details-loader", false);
+
+        @*Load company data (without expanding the collapse)*@
+        focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 33333333333333333333333333333333333333333333333333333333");
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+    }
+
+    @*Focus on approval*@
+    async function focusCompany(cvr)
+    {
+        @*Make sure the company is not already in focus*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Remove previously loaded company*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Initiate loading spinner before fetching approval data*@
+        await controlSpinner("company-details-loader", true);
+
+        @*Fetch approval data*@
+        alert('Fetch data...');
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Remove loading spinner*@
+        await controlSpinner("company-details-loader", false);
     }
 
     @*Control spinner*@
@@ -730,7 +819,7 @@
     {
         if (spin)
         {
-            document.getElementById(id).innerHTML = "<div class='loader' style='margin:auto;'></div>";
+            document.getElementById(id).innerHTML = "<div class='container nhb-margin-bottom nhb-margin-top'><div class='loader' style='margin:auto;'></div></div>";
         }
         else
         {
