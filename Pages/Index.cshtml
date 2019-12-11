@@ -89,7 +89,7 @@
                                 check = "checked";
                             }
                         }
-                        
+
                         <div class="form-check dropdown-item">
                             <input class="form-check-input" type="checkbox" value="@(Model.Municipality[i].MunicipalityCode)" @(check) id="dropdown-municipality-item@(i)" onchange="navigateWithParameters({});">
                             <label class="form-check-label" for="dropdown-municipality-item@(i)">
@@ -112,7 +112,7 @@
                 </div>
             </div>
             @*Clear all filters*@
-            <button type="button" class="btn btn-info btn-sm nhb-margin-bottom">Ryd filtre</button>
+            <button type="button" class="btn btn-info btn-sm nhb-margin-bottom" onclick="document.location.href='/';"><i class="material-icons small">clear</i> Ryd filtre</button>
         </div>
     </div>
     @*Search*@
@@ -137,37 +137,34 @@
                 <thead class="thead-light">
                     <tr>
                         <th>
-                            <div onclick="sortByColumn();">
+                            <div onclick="navigateWithParameters({ sortby: 'Pname'});" style="cursor: pointer;">
                                 @Html.DisplayNameFor(model => model.Approval[0].Pname)
+                                <i id="nhb-sortby-Pname" class="material-icons small"></i>
                             </div>
                         </th>
                         <th>
-                            <div onclick="sortByColumn();">
-                                @Html.DisplayNameFor(model => model.Approval[0].PostalCode)
-                            </div>
-                        </th>
-                        <th>
-                            <div onclick="sortByColumn();">
+                            <div onclick="navigateWithParameters({ sortby: 'City'});" style="cursor: pointer;">
                                 @Html.DisplayNameFor(model => model.Approval[0].City)
+                                <i id="nhb-sortby-City" class="material-icons small"></i>
                             </div>
                         </th>
                         <th>
-                            <div onclick="sortByColumn();">
+                            <div onclick="" style="cursor: pointer;">
                                 @Html.DisplayNameFor(model => model.Approval[0].EducationName)
                             </div>
                         </th>
                         <th>
-                            <div onclick="sortByColumn();">
+                            <div onclick="" style="cursor: pointer;">
                                 @Html.DisplayNameFor(model => model.Approval[0].SpecialisationName)
                             </div>
                         </th>
                         <th>
-                            <div onclick="sortByColumn();">
+                            <div onclick="" style="cursor: pointer;">
                                 @Html.DisplayNameFor(model => model.Approval[0].ApprovalDate)
                             </div>
                         </th>
                         <th>
-                            <div onclick="sortByColumn();">
+                            <div onclick="" style="cursor: pointer;">
                                 @Html.DisplayNameFor(model => model.Approval[0].ApprovalQuantity)
                             </div>
                         </th>
@@ -181,10 +178,7 @@
                                 @Html.DisplayFor(modelItem => item.Pname)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PostalCode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.City)
+                                @Html.DisplayFor(modelItem => item.PostalCode) @Html.DisplayFor(modelItem => item.City)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.EducationName)
@@ -210,7 +204,7 @@
                 <ul class="pagination pagination-sm">
                     @*Previous page*@
                     <li class="page-item">
-                        <a class="page-link" onclick="navigateWithParameters({pageindex: @((Model.PageIndex - 1))});" href="#" aria-label="Previous">
+                        <a class="page-link" onclick="navigateWithParameters({pageindex: @((Model.PageIndex - 1))});" style="cursor: pointer;" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Forrige</span>
                         </a>
@@ -408,18 +402,26 @@
 </div>
 
 @*Bottom nav
-<div class="row">
-    <div class="col-lg-8">
+    <div class="row">
+        <div class="col-lg-8">
 
-    </div>
-</div>*@
+        </div>
+    </div>*@
 
 <script>
+
+    @*Indicate which column is sorted by (if any)*@
+    var sortbyElement = document.getElementById("nhb-sortby-@Model.SortBy")
+    if (sortbyElement)
+    {
+        sortbyElement.innerHTML = "arrow_drop_down_circle";
+    }
 
     @*Construct url with query parameters and navigate to it*@
     function navigateWithParameters({
         pageindex = @Model.PageIndex,
-        pagesize = @Model.PageSize})
+        pagesize = @Model.PageSize,
+        sortby = "@Model.SortBy" })
     {
         var queryParameters = "?";
 
@@ -442,6 +444,12 @@
         //
         //
         //
+
+        @*Sort*@
+        if (sortby)
+        {
+            queryParameters += "sortby=" + sortby + "&";
+        }
 
         @*Search*@
         var search = document.getElementById("nhb-search").value;
@@ -856,21 +864,6 @@
                 resolve('resolved');
             }, 1000);
         });
-    }
-
-    @*Sort by column*@
-    function sortByColumn()
-    {
-        alert("hej");
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
     }
 
 </script>

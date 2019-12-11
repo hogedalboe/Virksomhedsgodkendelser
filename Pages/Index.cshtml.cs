@@ -29,7 +29,7 @@ namespace Virksomhedsgodkendelser.Pages
 
         // Filter and sorting parameters
         public string SearchParam { get; set; }
-        public string SortParam { get; set; }
+        public string SortBy { get; set; }
 
         // Geographical parameters
         public string[] RegionCodes { get; set; }
@@ -50,7 +50,8 @@ namespace Virksomhedsgodkendelser.Pages
             int pagesize = 50, 
             string search = "", 
             string regioncodes = "", 
-            string municipalitycodes = "")
+            string municipalitycodes = "",
+            string sortby = "")
         {
             // Parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&regioncodes=1081-1082&municipalitycodes=740-101&
 
@@ -58,15 +59,54 @@ namespace Virksomhedsgodkendelser.Pages
             Company = await _context.Company.ToListAsync(); ////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            //
+            //
+            //
+            //
+            //
 
             // Approval data
-            Approval = await _context.Approval.ToListAsync();
+            SortBy = sortby;
+            if (sortby != "")
+            {
+                switch (sortby)
+                {
+                    case "Pname":
+                        Approval = await _context.Approval.OrderBy(a => a.Pname).ToListAsync();
+                        break;
+                    case "City":
+                        Approval = await _context.Approval.OrderBy(a => a.City).ToListAsync();
+                        break;
+                    case "EducationName":
+                        Approval = await _context.Approval.OrderBy(a => a.EducationName).ToListAsync();
+                        break;
+                    case "SpecialisationName":
+                        Approval = await _context.Approval.OrderBy(a => a.SpecialisationName).ToListAsync();
+                        break;
+                    case "ApprovalDate":
+                        Approval = await _context.Approval.OrderBy(a => a.ApprovalDate).ToListAsync();
+                        break;
+                    case "ApprovalQuantity":
+                        Approval = await _context.Approval.OrderBy(a => a.ApprovalQuantity).ToListAsync();
+                        break;
+                    default:
+                        Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
+                        SortBy = "";
+                        break;
+                }
+            }
+            else
+            {
+                Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
+                SortBy = "";
+            }
 
             // Geographical data
             RegionCodes = regioncodes.Split("-");
-            Region = await _context.Region.ToListAsync();
-            MunicipalityCodes = municipalitycodes.Split("-"); 
-            Municipality = await _context.Municipality.ToListAsync();
+            Region = await _context.Region.OrderBy(r => r.RegionName).ToListAsync();
+            MunicipalityCodes = municipalitycodes.Split("-");
+            Municipality = await _context.Municipality.OrderBy(m => m.MunicipalityName).ToListAsync();
 
             // Filter by region
             if (regioncodes != "")
@@ -91,6 +131,39 @@ namespace Virksomhedsgodkendelser.Pages
                         Municipality.Remove(Municipality[i]);
                     }
                 }
+
+                // Sort remaining municipalities alphabetically (assuming municipal names are unique!)
+                /*
+                IList<Municipality> sortAlpha(IList<Municipality> municipalities)
+                {
+                    List<string> municipalitiesNameList = new List<string>();
+
+                    for (int i = 0; i < municipalities.Count; i++)
+                    {
+                        municipalitiesNameList.Add(municipalities[i].MunicipalityName);
+                    }
+
+                    municipalitiesNameList.Sort();
+
+                    IList<Municipality> newMunicipalities = new List<Municipality>();
+
+                    foreach (string mName in municipalitiesNameList)
+                    {
+                        foreach (Municipality municipality in municipalities)
+                        {
+                            if (mName == municipality.MunicipalityName)
+                            {
+                                newMunicipalities.Add(municipality);
+
+                                Console.WriteLine(mName);
+                            }
+                        }
+                    }
+
+                    return newMunicipalities;
+                }
+                Municipality = sortAlpha(Municipality);
+                */
             }
 
             // Sort by region
@@ -138,7 +211,7 @@ namespace Virksomhedsgodkendelser.Pages
             //
             //
             //
-            //
+            // THIS SHOULD BE LAST (BUT BEFORE PAGINATION) TO ITERATE AS FEW ITEMS AS POSSIBLE!
             //
             //
             //
