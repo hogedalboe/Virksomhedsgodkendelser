@@ -67,6 +67,15 @@ namespace Virksomhedsgodkendelser.Models
 
 
         // Move company data to company model
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
 
         public string CorporateStructureCode { get; set; } // Can be string instead of int due to exceptional cases
 

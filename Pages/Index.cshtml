@@ -33,8 +33,8 @@
                     Uddannelse
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-education">
-                    <a class="dropdown-item" href="#">Smed</a>
-                    <a class="dropdown-item" href="#">Datatekniker</a>
+                    <a class="dropdown-item">Smed</a>
+                    <a class="dropdown-item">Datatekniker</a>
                 </div>
             </div>
             @*Specialisation*@
@@ -43,8 +43,8 @@
                     Speciale
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
-                    <a class="dropdown-item" href="#">Klejnsmed</a>
-                    <a class="dropdown-item" href="#">Infrastruktur</a>
+                    <a class="dropdown-item">Klejnsmed</a>
+                    <a class="dropdown-item">Infrastruktur</a>
                 </div>
             </div>
             @*Region*@
@@ -107,7 +107,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
                     @for (int i = 0; i < Model.PageSizes.Length; i++)
                     {
-                        <a class="dropdown-item" href="#">@Model.PageSizes[i]</a>
+                        <a class="dropdown-item">@Model.PageSizes[i]</a>
                     }
                 </div>
             </div>
@@ -173,7 +173,7 @@
                 <tbody>
                     @foreach (var item in Model.Approval)
                     {
-                        <tr onclick="focusApproval(@Html.DisplayFor(modelItem => item.ID));">
+                        <tr onclick="focusApproval(@Html.DisplayFor(modelItem => item.ID));" class="nhb-tr" id="nhb-tr-@Html.DisplayFor(modelItem => item.ID)" style="cursor: pointer;">
                             <td>
                                 @Html.DisplayFor(modelItem => item.Pname)
                             </td>
@@ -344,7 +344,7 @@
                     @*Apply*@
                     <button class="btn btn-outline-info btn-sm nhb-margin-bottom" type="button" style="">Anvend</button>
                     @*Saved filters modal*@
-                    <button class="btn btn-outline-info btn-sm nhb-margin-bottom" onclick="loadSavedFilters();" type="button" style="" data-toggle="modal" data-target="#adminstrate-filters">Administrer filtreringer</button>
+                    <button class="btn btn-outline-info btn-sm nhb-margin-bottom" onclick="loadSavedFilters();" type="button" style="" data-toggle="modal" data-target="#adminstrate-filters">Gemte filtreringer</button>
                     <div class="modal fade" id="adminstrate-filters" tabindex="-1" role="dialog" aria-labelledby="Administrer filtreringer" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content nhb-margin-bottom">
@@ -393,7 +393,7 @@
         @*Exports*@
         <div class="nhb-widget container nhb-margin-bottom">
             <div class="btn-group" role="group" aria-label="Export options">
-                <button type="button" class="btn btn-outline-secondary btn-sm" disabled>Eksportér @Model.CompanyCount resultater</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" disabled><i class="material-icons medium">save_alt</i> @Model.ApprovalCount</button>
                 <button type="button" class="btn btn-secondary btn-sm">Excel</button>
                 <button type="button" class="btn btn-secondary btn-sm">PDF</button>
             </div>
@@ -626,7 +626,7 @@
             var ul = document.getElementById("nhb-saved-filters");
             var li = document.createElement("li");
             li.classList.add("nhb-margin-bottom");
-            li.innerHTML = '<li class="nhb-margin-bottom"><a onclick="" href="#" style="color:darkgreen;">' + filterName + '</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick="removeSavedFilter(this);"><span aria-hidden="true">&times;</span></button></li>';
+            li.innerHTML = '<li class="nhb-margin-bottom"><a onclick="" href="' + filterParameters + '" style="color:darkgreen;">' + filterName + '</a><button style="padding:0;border:none;background:none;margin-left:20px;" onclick="removeSavedFilter(this);"><span aria-hidden="true">&times;</span></button></li>';
             ul.appendChild(li);
         }
 
@@ -737,71 +737,74 @@
     }
 
     @*Focus on approval*@
+    var maxFocus = 0; // Allow maximum n focus requests at the time (n focus requests have to finish before another row can be clicked)
     async function focusApproval(approvalID)
     {
-        @*Make sure the clicked approval is not already in focus*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        maxFocus++;
+        if (maxFocus < 2)
+        {
+            @*Make sure the clicked approval is not already in focus*@
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
 
-        @*Indicate via styling that a certain row (approval) has been selected in the table. Remove this styling from all other rows*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+            @*Indicate via styling that a certain row (approval) has been selected in the table. Remove this styling from all other rows*@
+            var tr = document.getElementsByClassName("nhb-tr");
+            for (var i = 0; i < tr.length; i++)
+            {
+              tr[i].style.backgroundColor = "";
+            }
+            document.getElementById("nhb-tr-" + approvalID).style.backgroundColor = "lightgreen";
 
-        @*Remove previously loaded approval*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+            @*Remove previously loaded approval*@
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
 
-        @*Show approval collapse element*@
-        document.getElementById("approval-details").classList.add("show");
+            @*Show approval collapse element*@
+            document.getElementById("approval-details").classList.add("show");
 
-        @*Initiate loading spinner before fetching approval data*@
-        await controlSpinner("approval-details-loader", true);
+            @*Initiate loading spinner before fetching approval data*@
+            await controlSpinner("approval-details-loader", true);
 
-        @*Fetch approval data*@
-        alert('Fetch data...');
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+            @*Fetch approval data*@
+            alert('Fetch data...'); // DELETE THIS
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
 
-        @*Remove loading spinner*@
-        await controlSpinner("approval-details-loader", false);
+            @*Remove loading spinner*@
+            await controlSpinner("approval-details-loader", false);
 
-        @*Load company data (without expanding the collapse)*@
-        focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 33333333333333333333333333333333333333333333333333333333");
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+            @*Load company data (without expanding the collapse)*@
+            focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 3333333333333333333333333333"); // DELETE THIS
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+        }
+        maxFocus = 0;
     }
 
     @*Focus on approval*@
@@ -831,7 +834,7 @@
         await controlSpinner("company-details-loader", true);
 
         @*Fetch approval data*@
-        alert('Fetch data...');
+        alert('Fetch data...'); // DELETE THIS
         //
         //
         //

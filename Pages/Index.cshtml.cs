@@ -20,6 +20,7 @@ namespace Virksomhedsgodkendelser.Pages
         public IList<Municipality> Municipality { get; set; }
         public IList<District> District { get; set; }
         public IList<Approval> Approval { get; set; }
+        public int ApprovalCount { get; set; }
 
         // Paging
         public int PageIndex { get; set; }
@@ -34,11 +35,6 @@ namespace Virksomhedsgodkendelser.Pages
         // Geographical parameters
         public string[] RegionCodes { get; set; }
         public string[] MunicipalityCodes { get; set; }
-
-
-        // Focus
-        public string CompanyFocus { get; set; } // Use the API to fetch data about individual companies, instead of filling the browser with all 50 of them?
-        public int CompanyCount { get; set; }
 
         public IndexModel(Data.VirksomhedsgodkendelserContext context)
         {
@@ -226,7 +222,7 @@ namespace Virksomhedsgodkendelser.Pages
             // Determine page and row count from remaining approval items
             PageSize = pagesize;
             PageCount = 10;
-            CompanyCount = 234;
+            ApprovalCount = 234;
             //
             //
             //
