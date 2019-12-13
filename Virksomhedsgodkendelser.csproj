@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20191208162114_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20191209164938_InitialCreate.cs" />
     <Compile Remove="Migrations\20191209164938_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191209205827_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191209205827_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +35,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Pages\Approvals\" />
   </ItemGroup>
 
 </Project>

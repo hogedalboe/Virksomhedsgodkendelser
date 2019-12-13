@@ -65,6 +65,10 @@ namespace Virksomhedsgodkendelser.Models
 
         public string BusinessName { get; set; }
 
+        // Data about when the approval was uploaded, and by whom
+        public string UpdateInitials { get; set; }
+        public DateTime UpdateDate { get; set; }
+
 
         // Move company data to company model
         //

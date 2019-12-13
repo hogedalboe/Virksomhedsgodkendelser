@@ -35,6 +35,8 @@ namespace Virksomhedsgodkendelser.Migrations
                     MunicipalCode = table.Column<int>(nullable: false),
                     BusinessCode = table.Column<string>(nullable: true),
                     BusinessName = table.Column<string>(nullable: true),
+                    UpdateInitials = table.Column<string>(nullable: true),
+                    UpdateDate = table.Column<DateTime>(nullable: false),
                     CorporateStructureCode = table.Column<string>(nullable: true),
                     CorporateStructureName = table.Column<string>(nullable: true),
                     Website = table.Column<string>(nullable: true),

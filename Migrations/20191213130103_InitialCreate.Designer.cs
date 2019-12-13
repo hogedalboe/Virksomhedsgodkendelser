@@ -10,7 +10,7 @@ using Virksomhedsgodkendelser.Data;
 namespace Virksomhedsgodkendelser.Migrations
 {
     [DbContext(typeof(VirksomhedsgodkendelserContext))]
-    [Migration("20191209205827_InitialCreate")]
+    [Migration("20191213130103_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,12 @@ namespace Virksomhedsgodkendelser.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateInitials")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Website")

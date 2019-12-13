@@ -101,6 +101,12 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateInitials")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)");
 
