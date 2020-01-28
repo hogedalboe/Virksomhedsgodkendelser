@@ -78,6 +78,7 @@ namespace Virksomhedsgodkendelser.API
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
+        /*
         public async Task<ActionResult<Region>> PostRegion(Region region)
         {
             _context.Region.Add(region);
@@ -85,6 +86,18 @@ namespace Virksomhedsgodkendelser.API
 
             return CreatedAtAction("GetRegion", new { id = region.ID }, region);
         }
+        */
+        public async Task<ActionResult<List<Region>>> PostRegion(List<Region> regions)
+        {           
+            foreach (Region region in regions)
+            {
+                _context.Region.Add(region);
+                await _context.SaveChangesAsync();
+            }
+
+            return regions;
+        }
+
 
         // DELETE: api/Regions/5
         [HttpDelete("{id}")]
