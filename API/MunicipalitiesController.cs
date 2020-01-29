@@ -78,12 +78,15 @@ namespace Virksomhedsgodkendelser.API
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Municipality>> PostMunicipality(Municipality municipality)
+        public async Task<ActionResult<List<Municipality>>> PostMunicipality(List<Municipality> municipalities)
         {
-            _context.Municipality.Add(municipality);
-            await _context.SaveChangesAsync();
+            foreach (Municipality municipality in municipalities)
+            {
+                _context.Municipality.Add(municipality);
+                await _context.SaveChangesAsync();
+            }
 
-            return CreatedAtAction("GetMunicipality", new { id = municipality.ID }, municipality);
+            return municipalities;
         }
 
         // DELETE: api/Municipalities/5
