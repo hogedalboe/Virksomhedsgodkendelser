@@ -69,7 +69,7 @@ namespace Virksomhedsgodkendelser.Models
         public string UpdateInitials { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        // Move company data to company model
+        // Move company data to company model (normalize entity relations)
         //
         //
         //

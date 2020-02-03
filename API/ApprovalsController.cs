@@ -78,12 +78,15 @@ namespace Virksomhedsgodkendelser.API
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Approval>> PostApproval(Approval approval)
+        public async Task<ActionResult<List<Approval>>> PostApproval(List<Approval> approvals)
         {
-            _context.Approval.Add(approval);
-            await _context.SaveChangesAsync();
+            foreach (Approval approval in approvals)
+            {
+                _context.Approval.Add(approval);
+                await _context.SaveChangesAsync();
+            }
 
-            return CreatedAtAction("GetApproval", new { id = approval.ID }, approval);
+            return approvals;
         }
 
         // DELETE: api/Approvals/5
