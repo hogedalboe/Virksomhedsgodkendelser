@@ -81,10 +81,10 @@ namespace Virksomhedsgodkendelser.Pages
                         Approval = await _context.Approval.OrderBy(a => a.SpecialisationName).ToListAsync();
                         break;
                     case "ApprovalDate":
-                        Approval = await _context.Approval.OrderBy(a => a.ApprovalDate).ToListAsync();
+                        Approval = await _context.Approval.OrderByDescending(a => a.ApprovalDate).ToListAsync();
                         break;
                     case "ApprovalQuantity":
-                        Approval = await _context.Approval.OrderBy(a => a.ApprovalQuantity).ToListAsync();
+                        Approval = await _context.Approval.OrderByDescending(a => a.ApprovalQuantity).ToListAsync();
                         break;
                     default:
                         Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
@@ -94,7 +94,7 @@ namespace Virksomhedsgodkendelser.Pages
             }
             else
             {
-                Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
+                Approval = await _context.Approval.OrderByDescending(a => a.ApprovalDate).ToListAsync();
                 SortBy = "";
             }
 

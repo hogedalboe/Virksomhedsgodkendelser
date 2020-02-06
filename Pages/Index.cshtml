@@ -132,40 +132,44 @@
     <div class="col-lg-8">
         @*Table*@
         <div class="nhb-widget container">
-            @*Fill companies to table*@
-            <table class="table-sm table-striped">
-                <thead class="thead-light">
+            @*Fill approvals to table*@
+            <table class="table table-responsive"> @*table-primary*@
+                <thead class="table-info">
                     <tr>
                         <th>
-                            <div onclick="navigateWithParameters({ sortby: 'Pname'});" style="cursor: pointer;">
+                            <div onclick="navigateWithParameters({ sortby: 'Pname'});" style="cursor: pointer;" class="text-nowrap">
                                 @Html.DisplayNameFor(model => model.Approval[0].Pname)
-                                <i id="nhb-sortby-Pname" class="material-icons small"></i>
+                                <i id="nhb-sortby-Pname" class="material-icons medium"></i>
                             </div>
                         </th>
                         <th>
-                            <div onclick="navigateWithParameters({ sortby: 'City'});" style="cursor: pointer;">
+                            <div onclick="navigateWithParameters({ sortby: 'City'});" style="cursor: pointer;" class="text-nowrap">
                                 @Html.DisplayNameFor(model => model.Approval[0].City)
-                                <i id="nhb-sortby-City" class="material-icons small"></i>
+                                <i id="nhb-sortby-City" class="material-icons medium"></i>
                             </div>
                         </th>
                         <th>
-                            <div onclick="" style="cursor: pointer;">
+                            <div onclick="navigateWithParameters({ sortby: 'EducationName'});" style="cursor: pointer;" class="text-nowrap">
                                 @Html.DisplayNameFor(model => model.Approval[0].EducationName)
+                                <i id="nhb-sortby-EducationName" class="material-icons medium"></i>
                             </div>
                         </th>
                         <th>
-                            <div onclick="" style="cursor: pointer;">
+                            <div onclick="navigateWithParameters({ sortby: 'SpecialisationName'});" style="cursor: pointer;" class="text-nowrap">
                                 @Html.DisplayNameFor(model => model.Approval[0].SpecialisationName)
+                                <i id="nhb-sortby-SpecialisationName" class="material-icons medium"></i>
                             </div>
                         </th>
                         <th>
-                            <div onclick="" style="cursor: pointer;">
+                            <div onclick="navigateWithParameters({ sortby: 'ApprovalDate'});" style="cursor: pointer;" class="text-nowrap">
                                 @Html.DisplayNameFor(model => model.Approval[0].ApprovalDate)
+                                <i id="nhb-sortby-ApprovalDate" class="material-icons medium"></i>
                             </div>
                         </th>
                         <th>
-                            <div onclick="" style="cursor: pointer;">
+                            <div onclick="navigateWithParameters({ sortby: 'ApprovalQuantity'});" style="cursor: pointer;" class="text-nowrap">
                                 @Html.DisplayNameFor(model => model.Approval[0].ApprovalQuantity)
+                                <i id="nhb-sortby-ApprovalQuantity" class="material-icons medium"></i>
                             </div>
                         </th>
                     </tr>
@@ -286,8 +290,8 @@
                 </div>
                 <div class="card card-body">
                     <div class="container nhb-margin-bottom">
-                        <b>P-enhed</b><br />
-                        <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=1017660779" target="_blank" style="color:darkgreen;">12345678</a>, Holmbladsvej 2, 8600 Silkeborg<a href="https://www.google.com/maps/place/Holmbladsvej-2,-8600-Silkeborg" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                        P-enhed<br />
+                        <a id="ad-punit" href="https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=1017660779" target="_blank" style="color:darkgreen;"><b>12345678</b></a><b id="ad-paddress">, Holmbladsvej 2, 8600 Silkeborg</b><a id="ad-gmap" href="https://www.google.com/maps/place/Holmbladsvej-2,-8600-Silkeborg" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Branche</b><br />
@@ -313,7 +317,6 @@
                         <b>Godkendelsesantal </b> <span class="badge badge-info">8</span><br /><br />
                         <b>Igangværende aftaler </b> <span class="badge badge-info">8</span><br /><br />
                         <b>Øvrige aftaler </b> <span class="badge badge-info">0</span><br /><br />
-                        <b>Ubenyttede godkendelser </b> <span class="badge badge-danger">166</span><br /><br />
                     </div>
                 </div>
             </div>
@@ -737,77 +740,65 @@
     }
 
     @*Focus on approval*@
-    var maxFocus = 0; // Allow maximum n focus requests at the time (n focus requests have to finish before another row can be clicked)
     async function focusApproval(approvalID)
     {
-        maxFocus++;
-        if (maxFocus < 2)
+        @*Make sure the clicked approval is not already in focus*@
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Indicate via styling that a certain row (approval) has been selected in the table. Remove this styling from all other rows*@
+        var tr = document.getElementsByClassName("nhb-tr");
+        for (var i = 0; i < tr.length; i++)
         {
-            @*Make sure the clicked approval is not already in focus*@
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-
-            @*Indicate via styling that a certain row (approval) has been selected in the table. Remove this styling from all other rows*@
-            var tr = document.getElementsByClassName("nhb-tr");
-            for (var i = 0; i < tr.length; i++)
-            {
-              tr[i].style.backgroundColor = "";
-            }
-            document.getElementById("nhb-tr-" + approvalID).style.backgroundColor = "lightgreen";
-
-            @*Remove previously loaded approval*@
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-
-            @*Show approval collapse element*@
-            document.getElementById("approval-details").classList.add("show");
-
-            @*Initiate loading spinner before fetching approval data*@
-            await controlSpinner("approval-details-loader", true);
-
-            @*Fetch approval data*@
-            alert('Fetch data...'); // DELETE THIS
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-
-            @*Remove loading spinner*@
-            await controlSpinner("approval-details-loader", false);
-
-            @*Load company data (without expanding the collapse)*@
-            focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 3333333333333333333333333333"); // DELETE THIS
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
+            //tr[i].style.backgroundColor = "";
+            tr[i].classList.remove("table-active");
         }
-        maxFocus = 0;
+        //document.getElementById("nhb-tr-" + approvalID).style.backgroundColor = "lightgreen";
+        document.getElementById("nhb-tr-" + approvalID).classList.add("table-active");
+
+        @*Show approval collapse element*@
+        document.getElementById("approval-details").classList.add("show");
+
+        @*Initiate loading spinner before fetching approval data*@
+        await controlSpinner("approval-details-loader", true);
+
+        @*Fetch approval data*@
+        var json = getJson("/api/approvals/" + approvalID.toString());
+        alert(json.pname)
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        @*Remove loading spinner*@
+        await controlSpinner("approval-details-loader", false);
+
+        @*Load company data (without expanding the collapse)*@
+        focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 3333333333333333333333333333"); // DELETE THIS
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
     }
 
-    @*Focus on approval*@
+    @*Focus on company*@
     async function focusCompany(cvr)
     {
         @*Make sure the company is not already in focus*@
@@ -834,7 +825,7 @@
         await controlSpinner("company-details-loader", true);
 
         @*Fetch approval data*@
-        alert('Fetch data...'); // DELETE THIS
+        //alert('Fetch data...'); // DELETE THIS
         //
         //
         //
@@ -867,6 +858,25 @@
                 resolve('resolved');
             }, 1000);
         });
+    }
+
+    @*getJSON*@
+    function getJson(url)
+    {
+        var result = {};
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, false); // False = Synchronous
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function ()
+        {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                result = JSON.parse(xhr.responseText);
+            };
+        };
+        xhr.send();
+
+        return result;
     }
 
 </script>
