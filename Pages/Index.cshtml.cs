@@ -31,6 +31,7 @@ namespace Virksomhedsgodkendelser.Pages
         // Filter and sorting parameters
         public string SearchParam { get; set; }
         public string SortBy { get; set; }
+        public bool SortByNormal { get; set; }
 
         // Geographical parameters
         public string[] RegionCodes { get; set; }
@@ -40,14 +41,15 @@ namespace Virksomhedsgodkendelser.Pages
         {
             _context = context;
         }
-
+        
         public async Task OnGetAsync(
             int pageindex = 1, 
             int pagesize = 50, 
             string search = "", 
             string regioncodes = "", 
             string municipalitycodes = "",
-            string sortby = "")
+            string sortby = "",
+            bool sortbynormal = true)
         {
             // Parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&regioncodes=1081-1082&municipalitycodes=740-101&
 
@@ -64,32 +66,67 @@ namespace Virksomhedsgodkendelser.Pages
 
             // Approval data
             SortBy = sortby;
+            SortByNormal = sortbynormal;
             if (sortby != "")
             {
-                switch (sortby)
+                // Sorting column with intuitively normal ordering
+                if (sortbynormal)
                 {
-                    case "Pname":
-                        Approval = await _context.Approval.OrderBy(a => a.Pname).ToListAsync();
-                        break;
-                    case "City":
-                        Approval = await _context.Approval.OrderBy(a => a.City).ToListAsync();
-                        break;
-                    case "EducationName":
-                        Approval = await _context.Approval.OrderBy(a => a.EducationName).ToListAsync();
-                        break;
-                    case "SpecialisationName":
-                        Approval = await _context.Approval.OrderBy(a => a.SpecialisationName).ToListAsync();
-                        break;
-                    case "ApprovalDate":
-                        Approval = await _context.Approval.OrderByDescending(a => a.ApprovalDate).ToListAsync();
-                        break;
-                    case "ApprovalQuantity":
-                        Approval = await _context.Approval.OrderByDescending(a => a.ApprovalQuantity).ToListAsync();
-                        break;
-                    default:
-                        Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
-                        SortBy = "";
-                        break;
+                    switch (sortby)
+                    {
+                        case "Pname":
+                            Approval = await _context.Approval.OrderBy(a => a.Pname).ToListAsync();
+                            break;
+                        case "City":
+                            Approval = await _context.Approval.OrderBy(a => a.City).ToListAsync();
+                            break;
+                        case "EducationName":
+                            Approval = await _context.Approval.OrderBy(a => a.EducationName).ToListAsync();
+                            break;
+                        case "SpecialisationName":
+                            Approval = await _context.Approval.OrderBy(a => a.SpecialisationName).ToListAsync();
+                            break;
+                        case "ApprovalDate":
+                            Approval = await _context.Approval.OrderByDescending(a => a.ApprovalDate).ToListAsync();
+                            break;
+                        case "ApprovalQuantity":
+                            Approval = await _context.Approval.OrderByDescending(a => a.ApprovalQuantity).ToListAsync();
+                            break;
+                        default:
+                            Approval = await _context.Approval.OrderBy(a => a.ID).ToListAsync();
+                            SortBy = "";
+                            break;
+                    }
+                }
+                // Sorting column with reverse ordering
+                else
+                {
+                    switch (sortby)
+                    {
+                        case "Pname":
+                            Approval = await _context.Approval.OrderByDescending(a => a.Pname).ToListAsync();
+                            break;
+                        case "City":
+                            Approval = await _context.Approval.OrderByDescending(a => a.City).ToListAsync();
+                            break;
+                        case "EducationName":
+                            Approval = await _context.Approval.OrderByDescending(a => a.EducationName).ToListAsync();
+                            break;
+                        case "SpecialisationName":
+                            Approval = await _context.Approval.OrderByDescending(a => a.SpecialisationName).ToListAsync();
+                            break;
+                        case "ApprovalDate":
+                            Approval = await _context.Approval.OrderBy(a => a.ApprovalDate).ToListAsync();
+                            break;
+                        case "ApprovalQuantity":
+                            Approval = await _context.Approval.OrderBy(a => a.ApprovalQuantity).ToListAsync();
+                            break;
+                        default:
+                            Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
+                            SortBy = "";
+                            SortByNormal = true;
+                            break;
+                    }
                 }
             }
             else

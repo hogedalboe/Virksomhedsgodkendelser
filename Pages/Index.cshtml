@@ -191,7 +191,7 @@
                                 @Html.DisplayFor(modelItem => item.SpecialisationName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ApprovalDate)
+                                @item.ApprovalDate.ToString("MM-dd-yyyy", System.Globalization.CultureInfo.InvariantCulture)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ApprovalQuantity)
@@ -452,6 +452,11 @@
         if (sortby)
         {
             queryParameters += "sortby=" + sortby + "&";
+
+            if ("@Model.SortBy" == "" && sortby != "@Model.SortBy")
+            {
+                queryParameters += "sortbynormal=0&";
+            }
         }
 
         @*Search*@
