@@ -453,7 +453,7 @@
         {
             queryParameters += "sortby=" + sortby + "&";
 
-            if ("@Model.SortBy" == "" && sortby != "@Model.SortBy")
+            if ("@Model.SortBy" != "" && sortby == "@Model.SortBy")
             {
                 queryParameters += "sortbynormal=0&";
             }

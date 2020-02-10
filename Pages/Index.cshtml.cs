@@ -49,7 +49,7 @@ namespace Virksomhedsgodkendelser.Pages
             string regioncodes = "", 
             string municipalitycodes = "",
             string sortby = "",
-            bool sortbynormal = true)
+            int sortbynormal = 1)
         {
             // Parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&regioncodes=1081-1082&municipalitycodes=740-101&
 
@@ -66,11 +66,11 @@ namespace Virksomhedsgodkendelser.Pages
 
             // Approval data
             SortBy = sortby;
-            SortByNormal = sortbynormal;
+            SortByNormal = Convert.ToBoolean(sortbynormal);
             if (sortby != "")
             {
                 // Sorting column with intuitively normal ordering
-                if (sortbynormal)
+                if (SortByNormal)
                 {
                     switch (sortby)
                     {
@@ -124,7 +124,6 @@ namespace Virksomhedsgodkendelser.Pages
                         default:
                             Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
                             SortBy = "";
-                            SortByNormal = true;
                             break;
                     }
                 }
