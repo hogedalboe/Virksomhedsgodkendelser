@@ -191,7 +191,7 @@
                                 @Html.DisplayFor(modelItem => item.SpecialisationName)
                             </td>
                             <td>
-                                @item.ApprovalDate.ToString("MM-dd-yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                @item.ApprovalDate.ToString("dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ApprovalQuantity)
@@ -289,43 +289,47 @@
             @*Collapse*@
             <div class="collapse" id="approval-details">
                 <div class="card card-body">
-                    <div class="container nhb-margin-bottom">
-                        <b>P-enhed</b> <br />
-                        <div class="container nhb-margin-top">
-                            <a id="ad-pnr" href="" target="_blank" style="color:darkgreen;"></a><br />
-                            <div id="ad-pname" class="nhb-inline"></div><a id="ad-gmap" href="" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
-                            <div id="ad-address" class="nhb-inline"></div>
+                    <template id="ad-template">
+                        <div class="container nhb-margin-bottom">
+                            <b>P-enhed</b> <br />
+                            <div class="container nhb-margin-top">
+                                <a id="ad-pnr" href="" target="_blank" style="color:darkgreen;"></a><br />
+                                <div id="ad-pname" class="nhb-inline"></div><a id="ad-gmap" href="" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                                <div id="ad-address" class="nhb-inline"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Branche</b><br />
-                        <div class="container nhb-margin-top">
-                            <div id="ad-businessname"></div>
+                        <div class="container nhb-margin-bottom">
+                            <b>Branche</b><br />
+                            <div class="container nhb-margin-top">
+                                <div id="ad-businessname"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Uddannelse</b><br />
-                        <div class="container nhb-margin-top">
-                            <div id="ad-educationname"></div>
+                        <div class="container nhb-margin-bottom">
+                            <b>Uddannelse</b><br />
+                            <div class="container nhb-margin-top">
+                                <div id="ad-educationname"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Speciale</b><br />
-                        <div class="container nhb-margin-top">
-                            <div id="ad-specialisationame"></div>
+                        <div class="container nhb-margin-bottom">
+                            <b>Speciale</b><br />
+                            <div class="container nhb-margin-top">
+                                <div id="ad-specialisationame"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Godkendelsesdato</b><br />
-                        <div class="container nhb-margin-top">
-                            <div id="ad-approvaldate"></div>
+                        <div class="container nhb-margin-bottom">
+                            <b>Godkendelsesdato</b><br />
+                            <div class="container nhb-margin-top">
+                                <div id="ad-approvaldate"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="container">
-                        <b>Godkendelsesantal</b> <span class="badge badge-info"><b id="ad-approvalquantity"></b></span><br /><br />
-                        <b>Igangværende aftaler</b> <span class="badge badge-info"><b id="ad-approvalsinuse"></b></span><br /><br />
-                        <b>Øvrige aftaler</b> <span class="badge badge-info"><b id="ad-otherapprovalsinuse"></b></span><br /><br />
-                    </div>
+                        <div class="container">
+                            <b>Godkendelsesantal</b> <span class="badge badge-info"><b id="ad-approvalquantity"></b></span><br /><br />
+                            <b>Igangværende aftaler</b> <span class="badge badge-info"><b id="ad-approvalsinuse"></b></span><br /><br />
+                            <b>Øvrige aftaler</b> <span class="badge badge-info"><b id="ad-otherapprovalsinuse"></b></span><br /><br />
+                        </div>
+                    </template>
+                    @*Template target*@
+                    <div id="ad-body"></div>
                 </div>
             </div>
         </div>
@@ -755,35 +759,27 @@
     @*Focus on approval*@
     async function focusApproval(approvalID)
     {
-        @*Make sure the clicked approval is not already in focus*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-
         @*Indicate via styling that a certain row (approval) has been selected in the table. Remove this styling from all other rows*@
         var tr = document.getElementsByClassName("nhb-tr");
         for (var i = 0; i < tr.length; i++)
         {
-            //tr[i].style.backgroundColor = "";
             tr[i].classList.remove("table-active");
         }
-        //document.getElementById("nhb-tr-" + approvalID).style.backgroundColor = "lightgreen";
         document.getElementById("nhb-tr-" + approvalID).classList.add("table-active");
 
         @*Hide approval collapse element*@
-        document.getElementById("approval-details").classList.remove("show");
+        //document.getElementById("approval-details").classList.remove("show");
 
-        @*Initiate loading spinner before fetching approval data*@
-        await controlSpinner("approval-details-loader", true);
+        @*Reset collapse element via template*@
+        document.getElementById("ad-body").innerHTML = document.getElementById("ad-template").innerHTML;
+        // ALSO RESET THE COMPANY DETAILS HERE???????????????????????????????????????????????????????????????????????????????????????????
 
         @*Fetch approval data*@
-        var json = getJson(window.location.href + "api/approvals/" + approvalID.toString());
+        await getJson(window.location.href + "api/approvals/" + approvalID.toString(), 1);
+    }
 
+    function setApprovaldetails(json)
+    {
         @*P-enhed*@
         document.getElementById("ad-pnr").href = "https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=" + json.pnr;
         document.getElementById("ad-pnr").innerHTML = json.pnr;
@@ -791,34 +787,16 @@
         var completeAddress = json.streetAddress + "<br/>" + json.postalCode + " " + json.city;
         document.getElementById("ad-address").innerHTML = completeAddress;
         document.getElementById("ad-gmap").href = "https://www.google.com/maps/place/" + completeAddress;
-
-        @*Branche*@
         document.getElementById("ad-businessname").innerHTML = json.businessName;
-
-        @*Uddannelse*@
         document.getElementById("ad-educationname").innerHTML = json.educationName;
-
-        @*Speciale*@
         document.getElementById("ad-specialisationame").innerHTML = json.specialisationName;
-
-        @*Godkendelsesdato*@
-        document.getElementById("ad-approvaldate").innerHTML = moment(json.approvalDate).format('MM-DD-YYYY');
-
-        @*Godkendelsesantal*@
+        document.getElementById("ad-approvaldate").innerHTML = moment(json.approvalDate).format('DD-MM-YYYY');
         document.getElementById("ad-approvalquantity").innerHTML = json.approvalQuantity;
-
-        @*Igangværende aftaler*@
         document.getElementById("ad-approvalsinuse").innerHTML = json.approvalsInUse;
-
-        @*Øvrige aftaler*@
         document.getElementById("ad-otherapprovalsinuse").innerHTML = json.otherApprovalsInUse;
 
         @*Show approval collapse element*@
         document.getElementById("approval-details").classList.add("show");
-
-        @*Remove loading spinner*@
-        await controlSpinner("approval-details-loader", false);
-
 
         @*Load company data (without expanding the collapse)*@
         focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 3333333333333333333333333333"); // DELETE THIS
@@ -837,7 +815,9 @@
     @*Focus on company*@
     async function focusCompany(cvr)
     {
-        @*Make sure the company is not already in focus*@
+
+
+        @*Reloade with template.......*@
         //
         //
         //
@@ -847,33 +827,6 @@
         //
         //
 
-        @*Remove previously loaded company*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-
-        @*Initiate loading spinner before fetching approval data*@
-        await controlSpinner("company-details-loader", true);
-
-        @*Fetch approval data*@
-        //alert('Fetch data...'); // DELETE THIS
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-
-        @*Remove loading spinner*@
-        await controlSpinner("company-details-loader", false);
     }
 
     @*Control spinner*@
@@ -897,22 +850,27 @@
     }
 
     @*getJSON*@
-    function getJson(url)
+    async function getJson(url, mode)
     {
-        var result = {};
+        var json = {};
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, false); // False = Synchronous
+        xhr.open("GET", url, true); // False = Synchronous
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function ()
         {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                result = JSON.parse(xhr.responseText);
+            @*// https://www.w3schools.com/js/js_ajax_http_response.asp*@
+            if (xhr.readyState === 4 && xhr.status === 200)
+            {
+                json = JSON.parse(xhr.responseText);
+
+                if (mode == 1)
+                {
+                    setApprovaldetails(json);
+                }
             };
         };
         xhr.send();
-
-        return result;
     }
 
 </script>
