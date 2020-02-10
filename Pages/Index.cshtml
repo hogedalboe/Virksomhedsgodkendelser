@@ -284,39 +284,47 @@
             <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approval-details" aria-expanded="false" aria-controls="approval-details" style="width:100%;">
                 Godkendelsesoplysninger
             </button>
+            @*Loading spinner*@
+            <div id="approval-details-loader"></div>
+            @*Collapse*@
             <div class="collapse" id="approval-details">
-                <div id="approval-details-loader">
-                    @*Loading spinner: See JS*@
-                </div>
                 <div class="card card-body">
                     <div class="container nhb-margin-bottom">
-                        P-enhed<br />
-                        <a id="ad-punit" href="https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=1017660779" target="_blank" style="color:darkgreen;"><b>12345678</b></a><b id="ad-paddress">, Holmbladsvej 2, 8600 Silkeborg</b><a id="ad-gmap" href="https://www.google.com/maps/place/Holmbladsvej-2,-8600-Silkeborg" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                        <b>P-enhed</b> <br />
+                        <div class="container nhb-margin-top">
+                            <a id="ad-pnr" href="" target="_blank" style="color:darkgreen;"></a><br />
+                            <div id="ad-pname" class="nhb-inline"></div><a id="ad-gmap" href="" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                            <div id="ad-address" class="nhb-inline"></div>
+                        </div>
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Branche</b><br />
-                        Fremstilling af andre værktøjsmaskiner
+                        <div class="container nhb-margin-top">
+                            <div id="ad-businessname"></div>
+                        </div>
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Uddannelse</b><br />
-                        Smed
+                        <div class="container nhb-margin-top">
+                            <div id="ad-educationname"></div>
+                        </div>
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Speciale</b><br />
-                        Klejnsmed
+                        <div class="container nhb-margin-top">
+                            <div id="ad-specialisationame"></div>
+                        </div>
                     </div>
                     <div class="container nhb-margin-bottom">
                         <b>Godkendelsesdato</b><br />
-                        01-07-2014
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Seneste ændring</b><br />
-                        01-07-2014
+                        <div class="container nhb-margin-top">
+                            <div id="ad-approvaldate"></div>
+                        </div>
                     </div>
                     <div class="container">
-                        <b>Godkendelsesantal </b> <span class="badge badge-info">8</span><br /><br />
-                        <b>Igangværende aftaler </b> <span class="badge badge-info">8</span><br /><br />
-                        <b>Øvrige aftaler </b> <span class="badge badge-info">0</span><br /><br />
+                        <b>Godkendelsesantal</b> <span class="badge badge-info"><b id="ad-approvalquantity"></b></span><br /><br />
+                        <b>Igangværende aftaler</b> <span class="badge badge-info"><b id="ad-approvalsinuse"></b></span><br /><br />
+                        <b>Øvrige aftaler</b> <span class="badge badge-info"><b id="ad-otherapprovalsinuse"></b></span><br /><br />
                     </div>
                 </div>
             </div>
@@ -767,27 +775,50 @@
         //document.getElementById("nhb-tr-" + approvalID).style.backgroundColor = "lightgreen";
         document.getElementById("nhb-tr-" + approvalID).classList.add("table-active");
 
-        @*Show approval collapse element*@
-        document.getElementById("approval-details").classList.add("show");
+        @*Hide approval collapse element*@
+        document.getElementById("approval-details").classList.remove("show");
 
         @*Initiate loading spinner before fetching approval data*@
         await controlSpinner("approval-details-loader", true);
 
         @*Fetch approval data*@
-        var json = getJson("/api/approvals/" + approvalID.toString());
-        alert(json.pname)
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        var json = getJson(window.location.href + "api/approvals/" + approvalID.toString());
+
+        @*P-enhed*@
+        document.getElementById("ad-pnr").href = "https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=" + json.pnr;
+        document.getElementById("ad-pnr").innerHTML = json.pnr;
+        document.getElementById("ad-pname").innerHTML = json.pname;
+        var completeAddress = json.streetAddress + "<br/>" + json.postalCode + " " + json.city;
+        document.getElementById("ad-address").innerHTML = completeAddress;
+        document.getElementById("ad-gmap").href = "https://www.google.com/maps/place/" + completeAddress;
+
+        @*Branche*@
+        document.getElementById("ad-businessname").innerHTML = json.businessName;
+
+        @*Uddannelse*@
+        document.getElementById("ad-educationname").innerHTML = json.educationName;
+
+        @*Speciale*@
+        document.getElementById("ad-specialisationame").innerHTML = json.specialisationName;
+
+        @*Godkendelsesdato*@
+        document.getElementById("ad-approvaldate").innerHTML = moment(json.approvalDate).format('MM-DD-YYYY');
+
+        @*Godkendelsesantal*@
+        document.getElementById("ad-approvalquantity").innerHTML = json.approvalQuantity;
+
+        @*Igangværende aftaler*@
+        document.getElementById("ad-approvalsinuse").innerHTML = json.approvalsInUse;
+
+        @*Øvrige aftaler*@
+        document.getElementById("ad-otherapprovalsinuse").innerHTML = json.otherApprovalsInUse;
+
+        @*Show approval collapse element*@
+        document.getElementById("approval-details").classList.add("show");
 
         @*Remove loading spinner*@
         await controlSpinner("approval-details-loader", false);
+
 
         @*Load company data (without expanding the collapse)*@
         focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 3333333333333333333333333333"); // DELETE THIS

@@ -11,8 +11,14 @@
     margin-bottom: 10px;
 }
 
-.nhb-margin-top {
+.nhb-margin-top 
+{
     margin-top: 10px;
+}
+
+.nhb-inline
+{
+    display: inline;
 }
 
 /* Loading spinner
