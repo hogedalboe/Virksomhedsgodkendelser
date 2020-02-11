@@ -304,7 +304,7 @@
                         <div class="container nhb-margin-bottom">
                             <b>Branche</b><br />
                             <div class="container nhb-margin-top">
-                                <div id="ad-businessname"></div>
+                                <div id="ad-business"></div>
                             </div>
                         </div>
                         <div class="container nhb-margin-bottom">
@@ -790,7 +790,7 @@
         var completeAddress = json.streetAddress + "<br/>" + json.postalCode + " " + json.city;
         document.getElementById("ad-address").innerHTML = completeAddress;
         document.getElementById("ad-gmap").href = "https://www.google.com/maps/place/" + encodeURIComponent(completeAddress.replace('<br/>', ' '));
-        document.getElementById("ad-businessname").innerHTML = json.businessName;
+        document.getElementById("ad-business").innerHTML = json.businessCode + " " + json.businessName;
         document.getElementById("ad-educationname").innerHTML = json.educationName;
         document.getElementById("ad-specialisationame").innerHTML = json.specialisationName;
         document.getElementById("ad-approvaldate").innerHTML = moment(json.approvalDate).format('DD-MM-YYYY');
@@ -828,6 +828,7 @@
         document.getElementById("cd-corporatestructurename").innerHTML = approvalJson.corporateStructureName;
         document.getElementById("cd-website").innerHTML = approvalJson.website;
 
+        @*Get company data from Danish company registry*@
         fetch("https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=" + approvalJson.cvRnr)
             .then((response) =>
             {
@@ -838,7 +839,71 @@
                 var responseDOM = document.createElement("div");
                 responseDOM.innerHTML = html.trim();
 
-                document.getElementById("cd-body").innerHTML = responseDOM.querySelectorAll(".table, .stamdata")[0].innerHTML;
+                // Company name
+                var possibleElements_company = responseDOM.querySelectorAll(".enhedsnavn");
+                if (possibleElements_company.length > 0)
+                {
+                    for (var i = 0; i < possibleElements_company.length; i++)
+                    {
+                        try
+                        {
+                            var companyName = possibleElements_company[i].getElementsByTagName("h1")[0].innerHTML
+                            document.getElementById("cd-address").innerHTML = companyName;
+                        }
+                        catch (err)
+                        {
+                            console.error("Could not get company name from fetch", err);
+                        }
+                    }
+                }
+
+                // Address
+                var possibleElements_address = responseDOM.getElementsByTagName("strong");
+                if (possibleElements_address.length > 0)
+                {
+                    for (var i = 0; i < possibleElements_address.length; i++)
+                    {
+                        try
+                        {
+                            if (possibleElements_address[i].innerHTML == "Adresse")
+                            {
+                                var companyAddress = possibleElements_address[i].parentElement.parentElement.nextElementSibling.innerHTML;
+                                document.getElementById("cd-address").innerHTML += "<br/>" + companyAddress;
+                                break;
+                            }
+                        }
+                        catch (err)
+                        {
+                            console.error("Could not get company address info from fetch", err);
+                        }
+                    }
+                }
+
+                // City
+                var possibleElements_city = responseDOM.getElementsByTagName("strong");
+                if (possibleElements_city.length > 0)
+                {
+                    for (var i = 0; i < possibleElements_city.length; i++)
+                    {
+                        try
+                        {
+                            if (possibleElements_address[i].innerHTML == "Postnummer og by")
+                            {
+                                var companyCity = possibleElements_city[i].parentElement.parentElement.nextElementSibling.innerHTML;
+                                document.getElementById("cd-address").innerHTML += "<br/>" + companyCity;
+                                break;
+                            }
+                        }
+                        catch (err)
+                        {
+                            console.error("Could not get company city info from fetch", err);
+                        }
+                    }
+                }
+            })
+            .catch((error) =>
+            {
+                console.error("Fetch unsuccessful", error);
             });
     }
 
