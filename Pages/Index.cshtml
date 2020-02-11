@@ -244,38 +244,43 @@
                 Virksomhedsoplysninger
             </button>
             <div class="collapse" id="company-details">
-                <div id="company-details-loader">
-                    @*Loading spinner: See JS*@
-                </div>
                 <div class="card card-body">
-                    <div class="container nhb-margin-bottom">
-                        <b>Virksomhed</b><br />
-                        Fabrik A/S<br />
-                        Holmbladsvej 2<br />
-                        8600 Silkeborg<br />
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>CVR-nr</b><br />
-                        <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=24256790" target="_blank" style="color:darkgreen;">123456789</a>
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Selskabsform</b><br />
-                        Aktieselskab
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>P-enheder med godkendelser</b><br />
-                        Holmbladsvej 2, 8600 Silkeborg<a href="https://www.google.com/maps/place/Holmbladsvej-2,-8600-Silkeborg" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
-                        Hvidelvej 16, 7400 Herning<a href="https://www.google.com/maps/place/Hvidelvej-16,-7400-Herning" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Godkendelser på alle p-enheder</b><br />
-                        Klejnsmed <span class="badge badge-info">8</span><br />
-                        Beslagsmed <span class="badge badge-info">1</span><br />
-                    </div>
-                    <div class="container nhb-margin-bottom">
-                        <b>Website</b><br />
-                        <a href=" " style="color:darkgreen;">www.tresomt.dk</a><br />
-                    </div>
+                    <template id="cd-template">
+                        <div class="container nhb-margin-bottom">
+                            <b>Virksomhed</b><br />
+                            <div class="container nhb-margin-top">
+                                CVR-nr: <a id="cd-cvrnr" href="" target="_blank" style="color:darkgreen;"></a><br />
+                                <div id="cd-address"></div>
+                            </div>
+                        </div>
+                        <div class="container nhb-margin-bottom">
+                            <b>Selskabsform</b><br />
+                            <div id="cd-corporatestructurename" class="container nhb-margin-top"></div>
+                        </div>
+                        @*
+                            DEVELOPER NOTE, 2020-02-11, NHB:
+                            - Other approval addresses and accumulated approvals per specialisation is pushed to future development.
+
+                        <div class="container nhb-margin-bottom">
+                            <b>Produktionsenheder med godkendelser</b><br />
+                            Address 1 <a href="https://www.google.com/maps/place/..." target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                            Address 2 <a href="https://www.google.com/maps/place/..." target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
+                        </div>
+                        <div class="container nhb-margin-bottom">
+                            <b>Godkendelser på alle produktionsenheder</b><br />
+                            Specialisation 1 <span class="badge badge-info">8</span><br />
+                            Specialisation 2 <span class="badge badge-info">1</span><br />
+                        </div>
+                        *@
+                        <div class="container nhb-margin-bottom">
+                            <b>Website</b><br />
+                            <div class="container nhb-margin-top">
+                                <a id="cd-website" href="" style="color:darkgreen;"></a><br />
+                            </div>
+                        </div>
+                    </template>
+                    @*Template target*@
+                    <div id="cd-body"></div>
                 </div>
             </div>
         </div>
@@ -284,16 +289,14 @@
             <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#approval-details" aria-expanded="false" aria-controls="approval-details" style="width:100%;">
                 Godkendelsesoplysninger
             </button>
-            @*Loading spinner*@
-            <div id="approval-details-loader"></div>
             @*Collapse*@
             <div class="collapse" id="approval-details">
                 <div class="card card-body">
                     <template id="ad-template">
                         <div class="container nhb-margin-bottom">
-                            <b>P-enhed</b> <br />
+                            <b>Produktionsenhed</b> <br />
                             <div class="container nhb-margin-top">
-                                <a id="ad-pnr" href="" target="_blank" style="color:darkgreen;"></a><br />
+                                P-nr: <a id="ad-pnr" href="" target="_blank" style="color:darkgreen;"></a><br />
                                 <div id="ad-pname" class="nhb-inline"></div><a id="ad-gmap" href="" target="_blank"><i class="material-icons" style="color:darkgreen">place</i></a><br />
                                 <div id="ad-address" class="nhb-inline"></div>
                             </div>
@@ -770,23 +773,23 @@
         @*Hide approval collapse element*@
         //document.getElementById("approval-details").classList.remove("show");
 
-        @*Reset collapse element via template*@
+        @*Reset collapse elements via templates*@
         document.getElementById("ad-body").innerHTML = document.getElementById("ad-template").innerHTML;
-        // ALSO RESET THE COMPANY DETAILS HERE???????????????????????????????????????????????????????????????????????????????????????????
+        document.getElementById("cd-body").innerHTML = document.getElementById("cd-template").innerHTML;
 
         @*Fetch approval data*@
-        await getJson(window.location.href + "api/approvals/" + approvalID.toString(), 1);
+        await xhrRequest(window.location.href + "api/approvals/" + approvalID.toString(), 1);
     }
 
     function setApprovaldetails(json)
     {
-        @*P-enhed*@
+        @*Set approval details in DOM*@
         document.getElementById("ad-pnr").href = "https://datacvr.virk.dk/data/visenhed?enhedstype=produktionsenhed&id=" + json.pnr;
         document.getElementById("ad-pnr").innerHTML = json.pnr;
         document.getElementById("ad-pname").innerHTML = json.pname;
         var completeAddress = json.streetAddress + "<br/>" + json.postalCode + " " + json.city;
         document.getElementById("ad-address").innerHTML = completeAddress;
-        document.getElementById("ad-gmap").href = "https://www.google.com/maps/place/" + completeAddress;
+        document.getElementById("ad-gmap").href = "https://www.google.com/maps/place/" + encodeURIComponent(completeAddress.replace('<br/>', ' '));
         document.getElementById("ad-businessname").innerHTML = json.businessName;
         document.getElementById("ad-educationname").innerHTML = json.educationName;
         document.getElementById("ad-specialisationame").innerHTML = json.specialisationName;
@@ -799,58 +802,48 @@
         document.getElementById("approval-details").classList.add("show");
 
         @*Load company data (without expanding the collapse)*@
-        focusCompany("test 123333333333333333333333333333333333333 INPUT REAL CVR 3333333333333333333333333333"); // DELETE THIS
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        focusCompany(json);
+        @*
+            DEVELOPER NOTE, 2020.02.11, NHB: 
+            - At the moment, companies are not split into their own entity, even though they should be.
+            - Therefore, future development should implement this normalization in the database and model structure.
+            - This prerequisites company model data, or a more official access to the Danish company registry database currently fetched from in the focusCompany function.
+            - Also in this code block another approach should be implemented, where a company's data is requested individually with CVRnr as key.
+            - Specifically, only the CVRnr should be passed to the focusCompany function, and this function should then request the company data and write it to the DOM.
+        *@
+
     }
 
     @*Focus on company*@
-    async function focusCompany(cvr)
+    async function focusCompany(approvalJson)
     {
+        @*
+            DEVELOPER NOTE, 2020.02.11, NHB:
+            - Instead of below fetch and reuse of approval JSON, an internal company data structure should be developed. Otherwise a more official entry to the Danish company registry database should be implemented.
+        *@
 
+        @*Set company details in DOM*@
+        document.getElementById("cd-cvrnr").href = "https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=" + approvalJson.cvRnr;
+        document.getElementById("cd-cvrnr").innerHTML = approvalJson.cvRnr;
+        document.getElementById("cd-corporatestructurename").innerHTML = approvalJson.corporateStructureName;
+        document.getElementById("cd-website").innerHTML = approvalJson.website;
 
-        @*Reloade with template.......*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        fetch("https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=" + approvalJson.cvRnr)
+            .then((response) =>
+            {
+                return response.text();
+            })
+            .then((html) =>
+            {
+                var responseDOM = document.createElement("div");
+                responseDOM.innerHTML = html.trim();
 
+                document.getElementById("cd-body").innerHTML = responseDOM.querySelectorAll(".table, .stamdata")[0].innerHTML;
+            });
     }
 
-    @*Control spinner*@
-    function controlSpinner(id, spin)
-    {
-        if (spin)
-        {
-            document.getElementById(id).innerHTML = "<div class='container nhb-margin-bottom nhb-margin-top'><div class='loader' style='margin:auto;'></div></div>";
-        }
-        else
-        {
-            document.getElementById(id).innerHTML = "";
-        }
-
-        @*Make sure load spinner is visible before continuing*@
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve('resolved');
-            }, 1000);
-        });
-    }
-
-    @*getJSON*@
-    async function getJson(url, mode)
+    @*XMLHttpRequest*@
+    async function xhrRequest(url, mode)
     {
         var json = {};
 
@@ -862,10 +855,9 @@
             @*// https://www.w3schools.com/js/js_ajax_http_response.asp*@
             if (xhr.readyState === 4 && xhr.status === 200)
             {
-                json = JSON.parse(xhr.responseText);
-
                 if (mode == 1)
                 {
+                    json = JSON.parse(xhr.responseText);
                     setApprovaldetails(json);
                 }
             };
