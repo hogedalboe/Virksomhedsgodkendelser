@@ -760,7 +760,7 @@
     }
 
     @*Focus on approval*@
-    async function focusApproval(approvalID)
+    function focusApproval(approvalID)
     {
         @*Indicate via styling that a certain row (approval) has been selected in the table. Remove this styling from all other rows*@
         var tr = document.getElementsByClassName("nhb-tr");
@@ -778,7 +778,7 @@
         document.getElementById("cd-body").innerHTML = document.getElementById("cd-template").innerHTML;
 
         @*Fetch approval data*@
-        await xhrRequest(window.location.href + "api/approvals/" + approvalID.toString(), 1);
+        xhrRequest(window.location.href + "/api/approvals/" + approvalID.toString(), 1);
     }
 
     function setApprovaldetails(json)
@@ -815,7 +815,7 @@
     }
 
     @*Focus on company*@
-    async function focusCompany(approvalJson)
+    function focusCompany(approvalJson)
     {
         @*
             DEVELOPER NOTE, 2020.02.11, NHB:
@@ -908,7 +908,7 @@
     }
 
     @*XMLHttpRequest*@
-    async function xhrRequest(url, mode)
+    function xhrRequest(url, mode)
     {
         var json = {};
 
