@@ -10,8 +10,8 @@ using Virksomhedsgodkendelser.Data;
 namespace Virksomhedsgodkendelser.Migrations
 {
     [DbContext(typeof(VirksomhedsgodkendelserContext))]
-    [Migration("20191213130103_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200212201446_EducatioSpecialisation")]
+    partial class EducatioSpecialisation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,8 +64,8 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.Property<string>("CorporateStructureName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EducationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("EducationCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EducationName")
                         .HasColumnType("nvarchar(max)");
@@ -94,8 +94,8 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.Property<int>("RegionCode")
                         .HasColumnType("int");
 
-                    b.Property<int>("SpecialisationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("SpecialisationCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecialisationName")
                         .HasColumnType("nvarchar(max)");
@@ -159,6 +159,24 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.ToTable("District");
                 });
 
+            modelBuilder.Entity("Virksomhedsgodkendelser.Models.Education", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EducationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EducationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Education");
+                });
+
             modelBuilder.Entity("Virksomhedsgodkendelser.Models.Municipality", b =>
                 {
                     b.Property<int>("ID")
@@ -196,6 +214,27 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Region");
+                });
+
+            modelBuilder.Entity("Virksomhedsgodkendelser.Models.Specialisation", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EducationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecialisationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecialisationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Specialisation");
                 });
 #pragma warning restore 612, 618
         }

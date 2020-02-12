@@ -7,5 +7,10 @@ namespace Virksomhedsgodkendelser.Models
 {
     public class Education
     {
+        public int ID { get; set; }
+
+        public string EducationCode { get; set; }
+
+        public string EducationName { get; set; }
     }
 }

@@ -24,5 +24,9 @@ namespace Virksomhedsgodkendelser.Data
         public DbSet<Virksomhedsgodkendelser.Models.District> District { get; set; }
 
         public DbSet<Virksomhedsgodkendelser.Models.Approval> Approval { get; set; }
+
+        public DbSet<Virksomhedsgodkendelser.Models.Education> Education { get; set; }
+
+        public DbSet<Virksomhedsgodkendelser.Models.Specialisation> Specialisation { get; set; }
     }
 }

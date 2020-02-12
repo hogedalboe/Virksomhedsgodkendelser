@@ -80,11 +80,25 @@ namespace Virksomhedsgodkendelser.API
         [HttpPost]
         public async Task<ActionResult<List<Approval>>> PostApproval(List<Approval> approvals)
         {
-            foreach (Approval approval in approvals)
-            {
-                _context.Approval.Add(approval);
-                await _context.SaveChangesAsync();
-            }
+            // Remove previous approvals
+            _context.Approval.RemoveRange(_context.Approval);
+            await _context.SaveChangesAsync();
+
+            // Add approvals
+            _context.Approval.AddRange(approvals);
+            await _context.SaveChangesAsync();
+
+            /*
+            // Remove educations and specialisations
+            _context.Education.RemoveRange(_context.Education);
+            _context.Specialisation.RemoveRange(_context.Specialisation);
+
+            // Add educations and specialisations implicit in the posted approvals
+            List<Education> newEducations = (List<Education>)approvals.Select(a => new { a.EducationCode, a.EducationName }).Distinct();
+            _context.Education.AddRange(newEducations);
+            List<Specialisation> newSpecialisations = (List<Specialisation>)approvals.Select(a => new { a.SpecialisationCode, a.SpecialisationName }).Distinct();
+            _context.Education.AddRange(newEducations);
+            */
 
             return approvals;
         }

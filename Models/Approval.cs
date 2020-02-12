@@ -29,12 +29,12 @@ namespace Virksomhedsgodkendelser.Models
         [Display(Name = "By")]
         public string City { get; set; } //******
 
-        public int EducationCode { get; set; }
+        public string EducationCode { get; set; }
 
         [Display(Name = "Uddannelse")]
         public string EducationName { get; set; } //******
 
-        public int SpecialisationCode { get; set; }
+        public string SpecialisationCode { get; set; }
 
         [Display(Name = "Speciale")]
         public string SpecialisationName { get; set; } //******

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Virksomhedsgodkendelser.Data;
 
 namespace Virksomhedsgodkendelser.Migrations
 {
     [DbContext(typeof(VirksomhedsgodkendelserContext))]
-    partial class VirksomhedsgodkendelserContextModelSnapshot : ModelSnapshot
+    [Migration("20200212171425_noname")]
+    partial class noname
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,24 +159,6 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.ToTable("District");
                 });
 
-            modelBuilder.Entity("Virksomhedsgodkendelser.Models.Education", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EducationCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EducationName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Education");
-                });
-
             modelBuilder.Entity("Virksomhedsgodkendelser.Models.Municipality", b =>
                 {
                     b.Property<int>("ID")
@@ -212,27 +196,6 @@ namespace Virksomhedsgodkendelser.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Region");
-                });
-
-            modelBuilder.Entity("Virksomhedsgodkendelser.Models.Specialisation", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EducationCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SpecialisationCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SpecialisationName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Specialisation");
                 });
 #pragma warning restore 612, 618
         }
