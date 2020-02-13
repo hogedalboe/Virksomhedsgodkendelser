@@ -88,7 +88,6 @@ namespace Virksomhedsgodkendelser.API
             _context.Approval.AddRange(approvals);
             await _context.SaveChangesAsync();
 
-            /*
             // Remove educations and specialisations
             _context.Education.RemoveRange(_context.Education);
             _context.Specialisation.RemoveRange(_context.Specialisation);
@@ -98,7 +97,6 @@ namespace Virksomhedsgodkendelser.API
             _context.Education.AddRange(newEducations);
             List<Specialisation> newSpecialisations = (List<Specialisation>)approvals.Select(a => new { a.SpecialisationCode, a.SpecialisationName }).Distinct();
             _context.Education.AddRange(newEducations);
-            */
 
             return approvals;
         }

@@ -18,6 +18,7 @@
         if (cookies[i].includes("Filters="))
         {
             var cookieValue = cookies[i].replace("Filters=", "");
+            break;
         }
     }
     document.cookie = "Filters=" + encodeURIComponent(cookieValue) + "; expires=" + expiryDate.toUTCString();
@@ -112,7 +113,7 @@
                 </div>
             </div>
             @*Clear all filters*@
-            <button type="button" class="btn btn-info btn-sm nhb-margin-bottom" onclick="document.location.href='/';"><i class="material-icons small">clear</i> Ryd filtre</button>
+            <button type="button" class="btn btn-info btn-sm nhb-margin-bottom" onclick="window.location.href='@Url.Content("~/")'"><i class="material-icons small">clear</i> Ryd filtre</button>
         </div>
     </div>
     @*Search*@
@@ -362,8 +363,8 @@
                     @*Apply*@
                     <button class="btn btn-outline-info btn-sm nhb-margin-bottom" type="button" style="">Anvend</button>
                     @*Saved filters modal*@
-                    <button class="btn btn-outline-info btn-sm nhb-margin-bottom" onclick="loadSavedFilters();" type="button" style="" data-toggle="modal" data-target="#adminstrate-filters">Gemte filtreringer</button>
-                    <div class="modal fade" id="adminstrate-filters" tabindex="-1" role="dialog" aria-labelledby="Administrer filtreringer" aria-hidden="true">
+                    <button class="btn btn-outline-info btn-sm nhb-margin-bottom" onclick="loadSavedFilters();" type="button" style="" data-toggle="modal" data-target="#administrate-filters">Gemte filtreringer</button>
+                    <div class="modal fade" id="administrate-filters" tabindex="-1" role="dialog" aria-labelledby="Administrer filtreringer" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content nhb-margin-bottom">
                                 <div class="modal-header">
@@ -439,9 +440,34 @@
     function navigateWithParameters({
         pageindex = @Model.PageIndex,
         pagesize = @Model.PageSize,
-        sortby = "@Model.SortBy" })
+        sortby = "" }) //"@Model.SortBy"
     {
         var queryParameters = "?";
+
+        @*Sort*@
+        if (sortby != "")
+        {
+            queryParameters += "sortby=" + sortby + "&";
+
+            @*
+            if ("@Model.SortBy" != "" && sortby == "@Model.SortBy")
+            {
+                queryParameters += "sortbynormal=0&";
+            }
+            *@
+
+            if (sortby == "@Model.SortBy" && @(Model.SortByNormal ? "true" : "false") == true)
+            {
+                queryParameters += "sortbynormal=0&";
+            }
+
+            @*Return to first page due to new sorting*@
+            pageindex = 1;
+        }
+        else if ("@Model.SortBy" != "")
+        {
+            queryParameters += "sortby=" + "@Model.SortBy" + "&";
+        }
 
         @*Page navigation*@
         if (pageindex > 1 && pageindex <= @Model.PageCount)
@@ -462,17 +488,6 @@
         //
         //
         //
-
-        @*Sort*@
-        if (sortby)
-        {
-            queryParameters += "sortby=" + sortby + "&";
-
-            if ("@Model.SortBy" != "" && sortby == "@Model.SortBy")
-            {
-                queryParameters += "sortbynormal=0&";
-            }
-        }
 
         @*Search*@
         var search = document.getElementById("nhb-search").value;
@@ -555,7 +570,7 @@
 
 
         @*Navigate*@
-        window.location.href = queryParameters;
+        window.location.href = "@Url.Content("~/")" + queryParameters;
     }
 
     @*Handle searching by keydown in the search form*@
@@ -778,7 +793,8 @@
         document.getElementById("cd-body").innerHTML = document.getElementById("cd-template").innerHTML;
 
         @*Fetch approval data*@
-        xhrRequest(window.location.href + "/api/approvals/" + approvalID.toString(), 1);
+        xhrRequest("@Url.Content("~/")" + "api/approvals/" + approvalID.toString(), 1);
+
     }
 
     function setApprovaldetails(json)
@@ -845,15 +861,11 @@
                 {
                     for (var i = 0; i < possibleElements_company.length; i++)
                     {
-                        try
-                        {
+                        try {
                             var companyName = possibleElements_company[i].getElementsByTagName("h1")[0].innerHTML
                             document.getElementById("cd-address").innerHTML = companyName;
                         }
-                        catch (err)
-                        {
-                            console.error("Could not get company name from fetch", err);
-                        }
+                        catch{ }
                     }
                 }
 
@@ -872,10 +884,7 @@
                                 break;
                             }
                         }
-                        catch (err)
-                        {
-                            console.error("Could not get company address info from fetch", err);
-                        }
+                        catch{ }
                     }
                 }
 
@@ -894,10 +903,7 @@
                                 break;
                             }
                         }
-                        catch (err)
-                        {
-                            console.error("Could not get company city info from fetch", err);
-                        }
+                        catch{ }
                     }
                 }
             })

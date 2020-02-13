@@ -51,20 +51,9 @@ namespace Virksomhedsgodkendelser.Pages
             string sortby = "",
             int sortbynormal = 1)
         {
-            // Parametres: ~?pageindex=3&pagesize=10&search=novo-nordisk&regioncodes=1081-1082&municipalitycodes=740-101&
+            // Parameters: ~?pageindex=3&pagesize=10&search=novo-nordisk&regioncodes=1081-1082&municipalitycodes=740-101&
 
-            // This will be irrelevant once approvals are structured in the database. Thereafter, company data should be API-fetched on CompanyFocus.
-            Company = await _context.Company.ToListAsync(); ////////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            //
-            //
-            //
-            //
-            //
-
-            // Approval data
+            // Sorting
             SortBy = sortby;
             SortByNormal = Convert.ToBoolean(sortbynormal);
             if (sortby != "")
@@ -94,7 +83,7 @@ namespace Virksomhedsgodkendelser.Pages
                             break;
                         default:
                             Approval = await _context.Approval.OrderBy(a => a.ID).ToListAsync();
-                            SortBy = "";
+                            sortby = "";
                             break;
                     }
                 }
@@ -123,7 +112,7 @@ namespace Virksomhedsgodkendelser.Pages
                             break;
                         default:
                             Approval = await _context.Approval.OrderByDescending(a => a.ID).ToListAsync();
-                            SortBy = "";
+                            sortby = "";
                             break;
                     }
                 }
@@ -256,19 +245,16 @@ namespace Virksomhedsgodkendelser.Pages
             /*--------------------- Pagination -------------------------*/ // THIS SHOULD BE THE LAST STEP OF THE MODEL-VIEW LOADING!
 
             // Determine page and row count from remaining approval items
-            PageSize = pagesize;
+            if (pagesize <= PageSizes.Last())
+            {
+                PageSize = pagesize;
+            }
+            else
+            {
+                PageSize = PageSizes.Last();
+            }
             ApprovalCount = Approval.Count;
             PageCount = (int)((float)ApprovalCount / PageSize + 0.5f);
-
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
 
             // Default page or requested page
             if (pageindex > 0 && pageindex <= PageCount)
@@ -279,6 +265,21 @@ namespace Virksomhedsgodkendelser.Pages
             {
                 PageIndex = 1;
             }
+
+            // Return only page delimited approvals to view
+            Approval = Approval.Skip((PageIndex * PageSize) - PageSize).Take(PageSize).ToList();
+
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+
 
             // Page size and page scope (+/- 5 pages)
             //
