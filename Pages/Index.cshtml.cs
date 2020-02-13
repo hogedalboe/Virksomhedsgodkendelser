@@ -258,8 +258,8 @@ namespace Virksomhedsgodkendelser.Pages
             // Determine page and row count from remaining approval items
             PageSize = pagesize;
             ApprovalCount = Approval.Count;
-            PageCount = (int)(ApprovalCount / PageSize + 0.5f);
-            ApprovalCount = PageCount; // SLEEEEEEEEEEEEEEEEEEEEEEEEEEEEET
+            PageCount = (int)((float)ApprovalCount / PageSize + 0.5f);
+
             //
             //
             //
