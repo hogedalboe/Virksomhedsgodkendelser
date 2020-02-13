@@ -80,11 +80,13 @@ namespace Virksomhedsgodkendelser.API
         [HttpPost]
         public async Task<ActionResult<List<District>>> PostDistrict(List<District> districts)
         {
-            foreach (District district in districts)
-            {
-                _context.District.Add(district);
-                await _context.SaveChangesAsync();
-            }
+            // Remove previous approvals
+            _context.District.RemoveRange(_context.District);
+            await _context.SaveChangesAsync();
+
+            // Add approvals
+            _context.District.AddRange(districts);
+            await _context.SaveChangesAsync();
 
             return districts;
         }

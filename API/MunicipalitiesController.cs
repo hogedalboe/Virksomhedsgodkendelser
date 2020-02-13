@@ -80,11 +80,13 @@ namespace Virksomhedsgodkendelser.API
         [HttpPost]
         public async Task<ActionResult<List<Municipality>>> PostMunicipality(List<Municipality> municipalities)
         {
-            foreach (Municipality municipality in municipalities)
-            {
-                _context.Municipality.Add(municipality);
-                await _context.SaveChangesAsync();
-            }
+            // Remove previous approvals
+            _context.Municipality.RemoveRange(_context.Municipality);
+            await _context.SaveChangesAsync();
+
+            // Add approvals
+            _context.Municipality.AddRange(municipalities);
+            await _context.SaveChangesAsync();
 
             return municipalities;
         }

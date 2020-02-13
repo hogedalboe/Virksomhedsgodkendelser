@@ -135,14 +135,10 @@ namespace Virksomhedsgodkendelser.Pages
                 string[] arrRegionCodes = regioncodes.Split("-");
 
                 // Remove approvals not in region
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
+                foreach (string regionCode in arrRegionCodes)
+                {
+                    Approval = Approval.Where(a => a.RegionCode == Convert.ToInt32(regionCode)).ToList();
+                }
 
                 // Show only municipalities in region
                 for (int i = Municipality.Count-1; i >= 0; i--)
@@ -152,51 +148,7 @@ namespace Virksomhedsgodkendelser.Pages
                         Municipality.Remove(Municipality[i]);
                     }
                 }
-
-                // Sort remaining municipalities alphabetically (assuming municipal names are unique!)
-                /*
-                IList<Municipality> sortAlpha(IList<Municipality> municipalities)
-                {
-                    List<string> municipalitiesNameList = new List<string>();
-
-                    for (int i = 0; i < municipalities.Count; i++)
-                    {
-                        municipalitiesNameList.Add(municipalities[i].MunicipalityName);
-                    }
-
-                    municipalitiesNameList.Sort();
-
-                    IList<Municipality> newMunicipalities = new List<Municipality>();
-
-                    foreach (string mName in municipalitiesNameList)
-                    {
-                        foreach (Municipality municipality in municipalities)
-                        {
-                            if (mName == municipality.MunicipalityName)
-                            {
-                                newMunicipalities.Add(municipality);
-
-                                Console.WriteLine(mName);
-                            }
-                        }
-                    }
-
-                    return newMunicipalities;
-                }
-                Municipality = sortAlpha(Municipality);
-                */
             }
-
-            // Sort by region
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
 
             // Filter by municipality
             if (municipalitycodes != "")
@@ -204,27 +156,11 @@ namespace Virksomhedsgodkendelser.Pages
                 string[] arrMunicipalityCodes = municipalitycodes.Split("-");
 
                 // Remove approvals not in municipality
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
+                foreach (string municipalityCode in arrMunicipalityCodes)
+                {
+                    Approval = Approval.Where(a => a.MunicipalCode == Convert.ToInt32(municipalitycodes)).ToList();
+                }
             }
-
-            // Sort by municipality
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
 
             // Search through every string and substring related to the approval
             SearchParam = search;

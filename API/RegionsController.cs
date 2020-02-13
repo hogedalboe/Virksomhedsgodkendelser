@@ -88,12 +88,14 @@ namespace Virksomhedsgodkendelser.API
         }
         */
         public async Task<ActionResult<List<Region>>> PostRegion(List<Region> regions)
-        {           
-            foreach (Region region in regions)
-            {
-                _context.Region.Add(region);
-                await _context.SaveChangesAsync();
-            }
+        {
+            // Remove previous approvals
+            _context.Region.RemoveRange(_context.Region);
+            await _context.SaveChangesAsync();
+
+            // Add approvals
+            _context.Region.AddRange(regions);
+            await _context.SaveChangesAsync();
 
             return regions;
         }

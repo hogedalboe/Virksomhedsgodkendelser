@@ -81,8 +81,26 @@ namespace Virksomhedsgodkendelser.API
         public async Task<ActionResult<List<Approval>>> PostApproval(List<Approval> approvals)
         {
             // Remove previous approvals
+            /*
             _context.Approval.RemoveRange(_context.Approval);
             await _context.SaveChangesAsync();
+            */
+
+            // Remove dublicate approvals (EXTREMELY INEFFICIENT. RE-WRITE AT LATER STAGE!)
+            List<Approval> duplicates = new List<Approval>();
+            foreach (Approval dbApproval in _context.Approval)
+            {
+                foreach (Approval approval in approvals)
+                {
+                    if (dbApproval.Pnr == approval.Pnr && 
+                        dbApproval.EducationCode == approval.EducationCode &&
+                        dbApproval.SpecialisationCode == approval.SpecialisationCode)
+                    {
+                        duplicates.Add(dbApproval);
+                    }
+                }
+            }
+            duplicates.ForEach(x => _context.Approval.Remove(x));
 
             // Add approvals
             _context.Approval.AddRange(approvals);
@@ -95,7 +113,7 @@ namespace Virksomhedsgodkendelser.API
             // Add educations and specialisations implicit in the posted approvals
             List<Education> newEducations = (List<Education>)approvals.Select(a => new { a.EducationCode, a.EducationName }).Distinct();
             _context.Education.AddRange(newEducations);
-            List<Specialisation> newSpecialisations = (List<Specialisation>)approvals.Select(a => new { a.SpecialisationCode, a.SpecialisationName }).Distinct();
+            List<Specialisation> newSpecialisations = (List<Specialisation>)approvals.Select(a => new { a.SpecialisationCode, a.SpecialisationName, a.EducationCode }).Distinct();
             _context.Education.AddRange(newEducations);
 
             return approvals;

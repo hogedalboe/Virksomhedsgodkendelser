@@ -34,8 +34,7 @@
                     Uddannelse
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-education">
-                    <a class="dropdown-item">Smed</a>
-                    <a class="dropdown-item">Datatekniker</a>
+                    <a class="dropdown-item"></a>
                 </div>
             </div>
             @*Specialisation*@
@@ -44,8 +43,7 @@
                     Speciale
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
-                    <a class="dropdown-item">Klejnsmed</a>
-                    <a class="dropdown-item">Infrastruktur</a>
+                    <a class="dropdown-item"></a>
                 </div>
             </div>
             @*Region*@
@@ -615,6 +613,7 @@
 
                         numberOfExistingFilters++;
                     }
+                    break;
                 }
             }
 
@@ -718,6 +717,7 @@
                             newCookieValue += cookieFilterName + ":::" + cookieFilterParameters;
                         }
                     }
+                    break;
                 }
 
                 var declaredCookieName = "Filters=";
@@ -770,6 +770,7 @@
                         ul.appendChild(li);
                     }
                 }
+                break;
             }
         }
     }
