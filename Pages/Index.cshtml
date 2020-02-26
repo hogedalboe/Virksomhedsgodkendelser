@@ -34,7 +34,24 @@
                     Uddannelse
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-education">
-                    <a class="dropdown-item"></a>
+                    @for (int i = 0; i < Model.; i++)
+                    {
+                        string check = "";
+                        foreach (string strRegionCode in Model.RegionCodes)
+                        {
+                            if (Model.Region[i].RegionCode.ToString() == strRegionCode)
+                            {
+                                check = "checked";
+                            }
+                        }
+
+                        <div class="form-check dropdown-item">
+                            <input class="form-check-input" type="checkbox" value="@(Model.Region[i].RegionCode)" @(check) id="dropdown-region-item@(i)" onchange="navigateWithParameters({});">
+                            <label class="form-check-label" for="dropdown-region-item@(i)">
+                                @Html.DisplayFor(modelItem => Model.Region[i].RegionName)
+                            </label>
+                        </div>
+                    }
                 </div>
             </div>
             @*Specialisation*@
@@ -438,7 +455,7 @@
     function navigateWithParameters({
         pageindex = @Model.PageIndex,
         pagesize = @Model.PageSize,
-        sortby = "" }) //"@Model.SortBy"
+        sortby = "" })
     {
         var queryParameters = "?";
 

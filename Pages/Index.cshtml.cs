@@ -21,6 +21,8 @@ namespace Virksomhedsgodkendelser.Pages
         public IList<District> District { get; set; }
         public IList<Approval> Approval { get; set; }
         public int ApprovalCount { get; set; }
+        public IList<Education> Education { get; set; }
+        public IList<Specialisation> Specialisation { get; set; }
 
         // Paging
         public int PageIndex { get; set; }
@@ -37,6 +39,10 @@ namespace Virksomhedsgodkendelser.Pages
         public string[] RegionCodes { get; set; }
         public string[] MunicipalityCodes { get; set; }
 
+        // Education parameters
+        public string[] EducationCodes { get; set; }
+        public string[] SpecialisationCodes { get; set; }
+
         public IndexModel(Data.VirksomhedsgodkendelserContext context)
         {
             _context = context;
@@ -48,6 +54,8 @@ namespace Virksomhedsgodkendelser.Pages
             string search = "", 
             string regioncodes = "", 
             string municipalitycodes = "",
+            string educodes = "",
+            string speccodes = "",
             string sortby = "",
             int sortbynormal = 1)
         {
@@ -122,6 +130,30 @@ namespace Virksomhedsgodkendelser.Pages
                 Approval = await _context.Approval.OrderByDescending(a => a.ApprovalDate).ToListAsync();
                 SortBy = "";
             }
+
+            // Education data
+            EducationCodes = educodes.Split("-");
+            Education = await _context.Education.OrderBy(e => e.EducationName).ToListAsync();
+            SpecialisationCodes = speccodes.Split("-");
+            Specialisation = await _context.Specialisation.OrderBy(s => s.SpecialisationName).ToListAsync();
+
+            // Filter by education
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+            // Filter by specialisation
+            //
+            //
+            //
+            //
+            //
+            //
+            //
 
             // Geographical data
             RegionCodes = regioncodes.Split("-");
