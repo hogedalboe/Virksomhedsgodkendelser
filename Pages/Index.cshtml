@@ -34,21 +34,21 @@
                     Uddannelse
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-education">
-                    @for (int i = 0; i < Model.; i++)
+                    @for (int i = 0; i < Model.Education.Count; i++)
                     {
                         string check = "";
-                        foreach (string strRegionCode in Model.RegionCodes)
+                        foreach (string strEducationCode in Model.EducationCodes)
                         {
-                            if (Model.Region[i].RegionCode.ToString() == strRegionCode)
+                            if (Model.Education[i].EducationCode.ToString() == strEducationCode)
                             {
                                 check = "checked";
                             }
                         }
 
                         <div class="form-check dropdown-item">
-                            <input class="form-check-input" type="checkbox" value="@(Model.Region[i].RegionCode)" @(check) id="dropdown-region-item@(i)" onchange="navigateWithParameters({});">
-                            <label class="form-check-label" for="dropdown-region-item@(i)">
-                                @Html.DisplayFor(modelItem => Model.Region[i].RegionName)
+                            <input class="form-check-input" type="checkbox" value="@(Model.Education[i].EducationCode)" @(check) id="dropdown-education-item@(i)" onchange="navigateWithParameters({});">
+                            <label class="form-check-label" for="dropdown-education-item@(i)">
+                                @Html.DisplayFor(modelItem => Model.Education[i].EducationName)
                             </label>
                         </div>
                     }
@@ -60,7 +60,24 @@
                     Speciale
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown-specialisation">
-                    <a class="dropdown-item"></a>
+                    @for (int i = 0; i < Model.Specialisation.Count; i++)
+                    {
+                        string check = "";
+                        foreach (string strSpecialisationCode in Model.SpecialisationCodes)
+                        {
+                            if (Model.Specialisation[i].SpecialisationCode.ToString() == strSpecialisationCode)
+                            {
+                                check = "checked";
+                            }
+                        }
+
+                        <div class="form-check dropdown-item">
+                            <input class="form-check-input" type="checkbox" value="@(Model.Specialisation[i].SpecialisationCode)" @(check) id="dropdown-specialisation-item@(i)" onchange="navigateWithParameters({});">
+                            <label class="form-check-label" for="dropdown-Specialisation-item@(i)">
+                                @Html.DisplayFor(modelItem => Model.Specialisation[i].SpecialisationName)
+                            </label>
+                        </div>
+                    }
                 </div>
             </div>
             @*Region*@
@@ -548,7 +565,8 @@
 
             if (element.checked == true)
             {
-                if (municipalitySelected == false) {
+                if (municipalitySelected == false)
+                {
                     municipalitySelected = true;
                     municipalitycodes += "municipalitycodes="
                     municipalitycodes += element.value.toString();
@@ -566,13 +584,32 @@
         }
 
         @*Education*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        var educationSelected = false;
+        var educationcodes = "";
+        for (var i = 0; i < @(Model.Education.Count); i++)
+        {
+            var id = "dropdown-education-item" + i.toString();
+            var element = document.getElementById(id);
+
+            if (element.checked == true)
+            {
+                if (educationSelected == false)
+                {
+                    educationSelected = true;
+                    educationcodes += "educationcodes="
+                    educationcodes += element.value.toString();
+                }
+                else
+                {
+                    educationcodes += "-" + element.value.toString();
+                }
+            }
+
+        }
+        if (educationSelected)
+        {
+            queryParameters += educationcodes + "&";
+        }
 
         @*Specialisation*@
         //

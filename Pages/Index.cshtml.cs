@@ -54,8 +54,8 @@ namespace Virksomhedsgodkendelser.Pages
             string search = "", 
             string regioncodes = "", 
             string municipalitycodes = "",
-            string educodes = "",
-            string speccodes = "",
+            string educationcodes = "",
+            string specialisationcodes = "",
             string sortby = "",
             int sortbynormal = 1)
         {
@@ -132,19 +132,31 @@ namespace Virksomhedsgodkendelser.Pages
             }
 
             // Education data
-            EducationCodes = educodes.Split("-");
+            EducationCodes = educationcodes.Split("-");
             Education = await _context.Education.OrderBy(e => e.EducationName).ToListAsync();
-            SpecialisationCodes = speccodes.Split("-");
+            SpecialisationCodes = specialisationcodes.Split("-");
             Specialisation = await _context.Specialisation.OrderBy(s => s.SpecialisationName).ToListAsync();
 
             // Filter by education
-            //
-            //
-            //
-            //
-            //
-            //
-            //
+            if (educationcodes != "")
+            {
+                string[] arrEducationCodes = EducationCodes;
+
+                // Remove approvals not related to education
+                foreach (string eduCode in arrEducationCodes)
+                {
+                    Approval = Approval.Where(a => a.EducationCode == eduCode).ToList();
+                }
+
+                // Show only specialisations in selected education
+                for (int i = Specialisation.Count - 1; i >= 0; i--)
+                {
+                    if (!arrEducationCodes.Contains(Specialisation[i].EducationCode))
+                    {
+                        Specialisation.Remove(Specialisation[i]);
+                    }
+                }
+            }
 
             // Filter by specialisation
             //
@@ -164,12 +176,25 @@ namespace Virksomhedsgodkendelser.Pages
             // Filter by region
             if (regioncodes != "")
             {
-                string[] arrRegionCodes = regioncodes.Split("-");
+                string[] arrRegionCodes = RegionCodes;
 
-                // Remove approvals not in region
-                foreach (string regionCode in arrRegionCodes)
+                // Show only approvals in region
+                for (int i = Approval.Count - 1; i >= 0; i--)
                 {
-                    Approval = Approval.Where(a => a.RegionCode == Convert.ToInt32(regionCode)).ToList();
+                    if (!arrRegionCodes.Contains(Approval[i].RegionCode.ToString()))
+                    {
+                        Approval.Remove(Approval[i]); 
+                        //////////////////////////////////////////// DETTE SKAL IMPLEMENTERES I DE ANDRE FILTRE!
+                        /////
+                        /////
+                        /////
+                        /////
+                        /////
+                        /////
+                        /////
+                        /////
+                        /////
+                    }
                 }
 
                 // Show only municipalities in region
@@ -185,7 +210,7 @@ namespace Virksomhedsgodkendelser.Pages
             // Filter by municipality
             if (municipalitycodes != "")
             {
-                string[] arrMunicipalityCodes = municipalitycodes.Split("-");
+                string[] arrMunicipalityCodes = MunicipalityCodes;
 
                 // Remove approvals not in municipality
                 foreach (string municipalityCode in arrMunicipalityCodes)
