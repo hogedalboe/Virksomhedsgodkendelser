@@ -140,13 +140,16 @@ namespace Virksomhedsgodkendelser.Pages
             // Filter by education
             if (educationcodes != "")
             {
-                // Remove approvals not related to education
-                foreach (string eduCode in EducationCodes)
+                // Show only approvals with education(s)
+                for (int i = Approval.Count - 1; i >= 0; i--)
                 {
-                    Approval = Approval.Where(a => a.EducationCode == eduCode).ToList();
+                    if (!RegionCodes.Contains(Approval[i].RegionCode.ToString()))
+                    {
+                        Approval.Remove(Approval[i]);
+                    }
                 }
 
-                // Show only specialisations in selected education
+                // Show only specialisations in selected education(s)
                 for (int i = Specialisation.Count - 1; i >= 0; i--)
                 {
                     if (!EducationCodes.Contains(Specialisation[i].EducationCode))
@@ -177,7 +180,7 @@ namespace Virksomhedsgodkendelser.Pages
             // Filter by region
             if (regioncodes != "")
             {
-                // Show only approvals in region
+                // Show only approvals in region(s)
                 for (int i = Approval.Count - 1; i >= 0; i--)
                 {
                     if (!RegionCodes.Contains(Approval[i].RegionCode.ToString()))
@@ -186,7 +189,7 @@ namespace Virksomhedsgodkendelser.Pages
                     }
                 }
 
-                // Show only municipalities in region
+                // Show only municipalities in region(s)
                 for (int i = Municipality.Count-1; i >= 0; i--)
                 {
                     if (!RegionCodes.Contains(Municipality[i].RegionCode.ToString()))
