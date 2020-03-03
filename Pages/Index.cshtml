@@ -24,6 +24,8 @@
     document.cookie = "Filters=" + encodeURIComponent(cookieValue) + "; expires=" + expiryDate.toUTCString();
 </script>
 
+
+
 <div class="row">
     @*Filters*@
     <div class="col-lg-8">
@@ -459,7 +461,7 @@
         </div>
     </div>*@
 
-<script type="text/javascript">
+<script>
 
     @*Indicate which column is sorted by (if any)*@
     var sortbyElement = document.getElementById("nhb-sortby-@Model.SortBy")
@@ -612,13 +614,32 @@
         }
 
         @*Specialisation*@
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        var specialisationSelected = false;
+        var specialisationcodes = "";
+        for (var i = 0; i < @(Model.Specialisation.Count); i++)
+        {
+            var id = "dropdown-specialisation-item" + i.toString();
+            var element = document.getElementById(id);
+
+            if (element.checked == true)
+            {
+                if (specialisationSelected == false)
+                {
+                    specialisationSelected = true;
+                    specialisationcodes += "specialisationcodes="
+                    specialisationcodes += element.value.toString();
+                }
+                else
+                {
+                    specialisationcodes += "-" + element.value.toString();
+                }
+            }
+
+        }
+        if (specialisationSelected)
+        {
+            queryParameters += specialisationcodes + "&";
+        }
 
 
         @*Navigate*@
@@ -920,7 +941,7 @@
                             var companyName = possibleElements_company[i].getElementsByTagName("h1")[0].innerHTML
                             document.getElementById("cd-address").innerHTML = companyName;
                         }
-                        catch{ }
+                        catch(e){ }
                     }
                 }
 
@@ -939,7 +960,7 @@
                                 break;
                             }
                         }
-                        catch{ }
+                        catch(e){ }
                     }
                 }
 
@@ -958,7 +979,7 @@
                                 break;
                             }
                         }
-                        catch{ }
+                        catch(e){ }
                     }
                 }
             })

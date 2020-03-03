@@ -143,7 +143,7 @@ namespace Virksomhedsgodkendelser.Pages
                 // Show only approvals with education(s)
                 for (int i = Approval.Count - 1; i >= 0; i--)
                 {
-                    if (!RegionCodes.Contains(Approval[i].RegionCode.ToString()))
+                    if (!EducationCodes.Contains(Approval[i].EducationCode))
                     {
                         Approval.Remove(Approval[i]);
                     }

@@ -21,3 +21,22 @@
     display: inline;
 }
 
+/* IU Styling
+----------------------------------------------------------*/
+.btn-secondary {
+    background-color: #006189; /*Bluegreen*/
+    font-weight: bold;
+}
+
+.btn-info 
+{
+    background-color: #92153D; /*Rosa*/
+}
+
+th {
+    /*background-color: #243889;*/ /*Logo blue*/
+}
+
+body {
+    font-family: StevieSans, Helvetica, sans-serif;
+}
