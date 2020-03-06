@@ -213,19 +213,45 @@ namespace Virksomhedsgodkendelser.Pages
 
             // Search through every string and substring related to the approval
             SearchParam = search;
-            //
-            //
-            //
-            //
-            // THIS SHOULD BE LAST (BUT BEFORE PAGINATION) TO ITERATE AS FEW ITEMS AS POSSIBLE!
-            //
-            //
-            //
-            //
-            //
 
+            for (int i = Approval.Count - 1; i >= 0; i--)
+            {
+                bool match = false;
+                
+                foreach (string searchElement in SearchParam.Split(" "))
+                {
+                    if (Approval[i].Pname != null && Approval[i].Pname.ToLower().Contains(searchElement.ToLower()))
+                    {
+                        match = true;
+                        break;
+                    }
+                    else if (Approval[i].CVRnr != null && Approval[i].CVRnr.ToLower().Contains(searchElement.ToLower()))
+                    {
+                        match = true;
+                        break;
+                    }
+                    else if (Approval[i].Pnr != null && Approval[i].Pnr.ToLower().Contains(searchElement.ToLower()))
+                    {
+                        match = true;
+                        break;
+                    }
+                    else if (Approval[i].StreetAddress != null && Approval[i].StreetAddress.ToLower().Contains(searchElement.ToLower()))
+                    {
+                        match = true;
+                        break;
+                    }
+                    else if (Approval[i].Website != null && Approval[i].Website.ToLower().Contains(searchElement.ToLower()))
+                    {
+                        match = true;
+                        break;
+                    }
+                }
 
-
+                if (!match)
+                {
+                    Approval.Remove(Approval[i]);
+                }
+            }
 
             /*--------------------- Pagination -------------------------*/ // THIS SHOULD BE THE LAST STEP OF THE MODEL-VIEW LOADING!
 
